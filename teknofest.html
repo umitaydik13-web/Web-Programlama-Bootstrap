@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechNest — Teknoloji Mağazası</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:    #0a0a0f;
+      --paper:  #f8f7f4;
+      --accent: #ff4d00;
+      --muted:  #6b6b7a;
+      --card:   #ffffff;
+      --border: #e8e6e0;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      margin: 0;
+    }
+    h1,h2,h3,h4,h5,h6,nav { font-family: 'Syne', sans-serif; }
+
+    /* ── NAVBAR ───────────────────────── */
+    .site-nav {
+      background: var(--ink);
+      padding: 0;
+      position: sticky; top: 0; z-index: 1000;
+    }
+    .site-nav .navbar-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 22px;
+      color: #fff; letter-spacing: -0.5px;
+    }
+    .site-nav .navbar-brand span { color: var(--accent); }
+    .site-nav .nav-link {
+      color: #aaa !important; font-size: 14px; font-weight: 500;
+      padding: 6px 14px !important; border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+    .site-nav .nav-link:hover { color: #fff !important; background: rgba(255,255,255,.07); }
+    .site-nav .nav-link.active { color: #fff !important; }
+    .site-nav .navbar-toggler { border-color: #333; }
+    .site-nav .navbar-toggler-icon { filter: invert(1) brightness(.7); }
+    .cart-btn {
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 8px;
+      padding: 8px 18px; font-size: 13px; font-weight: 600;
+      font-family: 'Syne', sans-serif;
+      transition: background .15s; cursor: pointer;
+    }
+    .cart-btn:hover { background: #e04400; }
+
+    /* ── HERO ─────────────────────────── */
+    .hero {
+      background: var(--ink);
+      color: #fff;
+      padding: 72px 0 60px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 45%; height: 100%;
+      background: linear-gradient(135deg, #ff4d00 0%, #ff8c00 100%);
+      clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+      opacity: .08;
+    }
+    .hero-tag {
+      display: inline-block; background: var(--accent);
+      color: #fff; font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 4px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -1.5px; margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero p { font-size: 17px; color: #aaa; max-width: 440px; margin-bottom: 32px; line-height: 1.6; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-hero-primary {
+      background: var(--accent); color: #fff; border: none;
+      padding: 14px 28px; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+      cursor: pointer; transition: all .15s;
+    }
+    .btn-hero-primary:hover { background: #e04400; transform: translateY(-1px); }
+    .btn-hero-secondary {
+      background: transparent; color: #fff;
+      border: 1px solid #333; padding: 14px 28px; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px;
+      cursor: pointer; transition: all .15s;
+    }
+    .btn-hero-secondary:hover { border-color: #555; background: rgba(255,255,255,.05); }
+    .hero-stats {
+      display: flex; gap: 36px; margin-top: 48px;
+      padding-top: 36px; border-top: 1px solid #1a1a1a;
+    }
+    .hero-stat-val { font-size: 28px; font-weight: 800; font-family: 'Syne', sans-serif; }
+    .hero-stat-lbl { font-size: 12px; color: #666; margin-top: 2px; }
+
+    /* ── SECTION HEADER ──────────────── */
+    .section-wrap { padding: 64px 0; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 800; letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .section-sub { color: var(--muted); font-size: 15px; }
+
+    /* ── PRODUCTS ────────────────────── */
+    .product-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .product-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.1); transform: translateY(-3px); }
+    .product-img {
+      height: 200px; display: flex; align-items: center;
+      justify-content: center; font-size: 64px;
+      position: relative;
+    }
+    .product-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--accent); color: #fff;
+      font-size: 10px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 4px;
+    }
+    .product-body { padding: 18px 20px 20px; }
+    .product-category { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
+    .product-name { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
+    .product-price {
+      font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
+      color: var(--ink); margin-bottom: 14px;
+    }
+    .product-price span { font-size: 13px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+    .btn-add {
+      width: 100%; background: var(--ink); color: #fff;
+      border: none; border-radius: 10px; padding: 11px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+      cursor: pointer; transition: background .15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-add:hover { background: #222; }
+
+    /* ── FEATURE SECTION ─────────────── */
+    .features-wrap {
+      background: var(--ink); color: #fff;
+      padding: 72px 0;
+    }
+    .feature-item {
+      padding: 28px; border-radius: 14px;
+      border: 1px solid #1e1e1e;
+      transition: border-color .2s, background .2s;
+    }
+    .feature-item:hover { border-color: #333; background: #0f0f14; }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(255,77,0,.12); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 16px;
+    }
+    .feature-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .feature-desc  { font-size: 14px; color: #666; line-height: 1.6; }
+
+    /* ── NEWSLETTER / FORM ───────────── */
+    .newsletter-wrap {
+      background: linear-gradient(135deg, var(--accent) 0%, #ff8c00 100%);
+      padding: 64px 0; color: #fff;
+    }
+    .newsletter-wrap h2 { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+    .newsletter-wrap p  { opacity: .85; font-size: 16px; margin-bottom: 28px; }
+    .newsletter-form { display: flex; gap: 10px; max-width: 480px; }
+    .newsletter-input {
+      flex: 1; padding: 14px 18px; border-radius: 10px;
+      border: 2px solid rgba(255,255,255,.3);
+      background: rgba(255,255,255,.15); color: #fff;
+      font-family: 'Inter', sans-serif; font-size: 14px;
+      outline: none; transition: border-color .15s;
+    }
+    .newsletter-input::placeholder { color: rgba(255,255,255,.65); }
+    .newsletter-input:focus { border-color: rgba(255,255,255,.7); background: rgba(255,255,255,.2); }
+    .newsletter-btn {
+      background: #fff; color: var(--accent);
+      border: none; border-radius: 10px; padding: 14px 24px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+      cursor: pointer; white-space: nowrap; transition: all .15s;
+    }
+    .newsletter-btn:hover { background: #f0f0f0; }
+
+    /* ── FORM VALIDATION ─────────────── */
+    .checkout-form .form-control {
+      border-radius: 10px; border: 1.5px solid var(--border);
+      font-size: 14px; padding: 11px 14px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .checkout-form .form-control:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,77,0,.12);
+    }
+    .checkout-form .form-label { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .checkout-form .was-validated .form-control:valid   { border-color: #22c55e; }
+    .checkout-form .was-validated .form-control:invalid { border-color: #ef4444; }
+
+    /* ── MODAL ───────────────────────── */
+    .modal-content { border-radius: 20px; border: none; overflow: hidden; }
+    .modal-header {
+      background: var(--ink); color: #fff;
+      border-bottom: none; padding: 20px 24px;
+    }
+    .modal-title { font-family: 'Syne', sans-serif; font-weight: 800; }
+    .modal-header .btn-close { filter: invert(1); }
+    .modal-body { padding: 24px; }
+    .modal-product-img { font-size: 64px; text-align: center; padding: 20px; background: var(--paper); border-radius: 12px; margin-bottom: 20px; }
+
+    /* ── CODE DRAWER ─────────────────── */
+    .code-drawer {
+      border-top: 1px solid var(--border);
+      background: #fafaf8;
+    }
+    .code-drawer-toggle {
+      width: 100%; background: none; border: none;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: color .15s, background .15s;
+      text-align: left;
+    }
+    .code-drawer-toggle:hover { color: var(--ink); background: #f0ede6; }
+    .code-drawer-toggle .toggle-arrow { margin-left: auto; transition: transform .25s; font-size: 10px; }
+    .code-drawer-toggle.open .toggle-arrow { transform: rotate(180deg); }
+    .code-drawer-body { display: none; }
+    .code-drawer-body.open { display: grid; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 640px) { .code-drawer-body.open { grid-template-columns: 1fr; } }
+    .code-panel { padding: 20px; }
+    .code-panel-vanilla { border-right: 1px solid var(--border); }
+    .code-panel-label {
+      font-size: 10px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 4px;
+      display: inline-block; margin-bottom: 10px;
+    }
+    .lbl-v { background: #fee2e2; color: #b91c1c; }
+    .lbl-b { background: #dcfce7; color: #15803d; }
+    .code-lines {
+      font-family: 'Courier New', monospace; font-size: 12px;
+      line-height: 1.7; color: #374151;
+      background: #f8f7f4; border-radius: 8px;
+      padding: 14px 16px; overflow-x: auto;
+      white-space: pre; border: 1px solid var(--border);
+      margin: 0;
+    }
+    .code-lines .kw  { color: #7c3aed; }
+    .code-lines .str { color: #059669; }
+    .code-lines .cls { color: #dc2626; }
+    .code-lines .cmt { color: #9ca3af; font-style: italic; }
+    .lines-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 1px 7px; border-radius: 99px; margin-left: 6px;
+    }
+    .lb-v { background: #ef4444; color: #fff; }
+    .lb-b { background: #22c55e; color: #fff; }
+
+    /* ── FOOTER ──────────────────────── */
+    footer {
+      background: var(--ink); color: #555;
+      padding: 32px 0; text-align: center;
+      font-size: 13px;
+    }
+    footer strong { color: #fff; }
+
+    /* ── SECTION WRAPPER WITH DRAWER ── */
+    .demo-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .demo-section-inner { padding: 32px; }
+
+    /* Toast */
+    .toast-container { z-index: 9999; }
+
+    /* Accordion custom */
+    .faq-item {
+      border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; margin-bottom: 8px;
+    }
+    .faq-btn {
+      width: 100%; background: var(--card); border: none;
+      padding: 16px 20px; text-align: left;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600;
+      color: var(--ink); cursor: pointer;
+    }
+    .faq-btn:hover { background: var(--paper); }
+    .faq-body { padding: 0 20px 16px; font-size: 14px; color: var(--muted); line-height: 1.7; display: none; }
+    .faq-body.open { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════ NAVBAR ══════════════════════ -->
+<nav class="navbar navbar-expand-lg site-nav">
+  <div class="container">
+    <a class="navbar-brand" href="#">Tech<span>Nest</span></a>
+
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto me-4 gap-1">
+        <li class="nav-item"><a class="nav-link active" href="#">Ana Sayfa</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Ürünler</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">İletişim</a></li>
+      </ul>
+      <button class="cart-btn" onclick="showCartToast()">
+        <i class="bi bi-bag me-1"></i>Sepet (0)
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="code-drawer" style="border-top:none;border-bottom:1px solid var(--border)">
+  <button class="code-drawer-toggle" onclick="toggleDrawer(this)">
+    <i class="bi bi-code-slash"></i>
+    <span>Navbar kodu — Bootstrap <span class="lines-badge lb-b">12 satır</span> vs Vanilla <span class="lines-badge lb-v">89 satır</span></span>
+    <span class="toggle-arrow">▼</span>
+  </button>
+  <div class="code-drawer-body">
+    <div class="code-panel code-panel-vanilla">
+      <span class="code-panel-label lbl-v">Vanilla JS <span class="lines-badge lb-v">89 satır</span></span>
+      <pre class="code-lines"><span class="cmt">/* CSS: responsive nav + hamburger */</span>
+<span class="cls">.nav</span> { display: flex; justify-content: space-between; }
+<span class="cls">.nav-menu</span> { display: flex; list-style: none; gap: 20px; }
+<span class="cls">.hamburger</span> { display: none; cursor: pointer; }
+<span class="cls">.hamburger span</span> { display: block; width:24px; height:2px;
+  background:#fff; margin:5px 0; transition:.3s; }
+
+<span class="kw">@media</span> (max-width: 991px) {
+  <span class="cls">.nav-menu</span> { display: none; position: absolute;
+    top:60px; left:0; width:100%;
+    background:#0a0a0f; flex-direction:column;
+    padding:20px; gap:8px; }
+  <span class="cls">.nav-menu.open</span> { display: flex; }
+  <span class="cls">.hamburger</span> { display: block; }
+  <span class="cmt">/* + 15 satır daha animasyon için... */</span>
+}
+<span class="cmt">/* JS: click, dışarı tıklama, ESC, resize */</span>
+<span class="kw">const</span> btn = document.querySelector(<span class="str">'.hamburger'</span>);
+btn.addEventListener(<span class="str">'click'</span>, () =&gt; {
+  menu.classList.toggle(<span class="str">'open'</span>);
+  btn.setAttribute(<span class="str">'aria-expanded'</span>,
+    menu.classList.contains(<span class="str">'open'</span>));
+});
+document.addEventListener(<span class="str">'click'</span>, e =&gt; { <span class="cmt">/* dışarı */</span> });
+document.addEventListener(<span class="str">'keydown'</span>, e =&gt; { <span class="cmt">/* ESC */</span> });
+window.addEventListener(<span class="str">'resize'</span>, () =&gt; { <span class="cmt">/* kapat */</span> });</pre>
+    </div>
+    <div class="code-panel">
+      <span class="code-panel-label lbl-b">Bootstrap 5 <span class="lines-badge lb-b">12 satır</span></span>
+      <pre class="code-lines"><span class="cmt">&lt;!-- Tüm menü davranışı: 12 satır HTML --&gt;</span>
+&lt;<span class="kw">nav</span> class=<span class="str">"navbar navbar-expand-lg"</span>&gt;
+  &lt;<span class="kw">button</span>
+    class=<span class="str">"navbar-toggler"</span>
+    data-bs-toggle=<span class="str">"collapse"</span>
+    data-bs-target=<span class="str">"#nav"</span>
+    aria-controls=<span class="str">"nav"</span>
+    aria-expanded=<span class="str">"false"</span>
+    aria-label=<span class="str">"Menüyü aç"</span>&gt;
+    &lt;<span class="kw">span</span> class=<span class="str">"navbar-toggler-icon"</span>&gt;&lt;/<span class="kw">span</span>&gt;
+  &lt;/<span class="kw">button</span>&gt;
+  &lt;<span class="kw">div</span> class=<span class="str">"collapse navbar-collapse"</span> id=<span class="str">"nav"</span>&gt;
+    <span class="cmt">&lt;!-- menü içeriği --&gt;</span>
+  &lt;/<span class="kw">div</span>&gt;
+&lt;/<span class="kw">nav</span>&gt;
+
+<span class="cmt">/* JS: Sıfır satır. */</span>
+<span class="cmt">/* aria-expanded otomatik yönetiliyor. */</span>
+<span class="cmt">/* ESC, dışarı tıklama, resize hepsi dahil. */</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <span class="hero-tag">Yeni Sezon 2026</span>
+        <h1>Teknolojiyi<br><em>Hisset</em></h1>
+        <p>En son teknoloji ürünlerini en iyi fiyatlarla keşfedin. Ücretsiz kargo, 30 gün iade garantisi.</p>
+        <div class="hero-btns">
+          <button class="btn-hero-primary" onclick="scrollToProducts()">Ürünleri Keşfet</button>
+          <button class="btn-hero-secondary" data-bs-toggle="modal" data-bs-target="#campaignModal">
+            Kampanyaları Gör
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hero-stat-val">12K+</div><div class="hero-stat-lbl">Mutlu Müşteri</div></div>
+          <div><div class="hero-stat-val">4.9★</div><div class="hero-stat-lbl">Ortalama Puan</div></div>
+          <div><div class="hero-stat-val">%30</div><div class="hero-stat-lbl">Sezon İndirimi</div></div>
+        </div>
+      </div>
+      <div class="col-lg-5 d-none d-lg-flex justify-content-center" style="font-size:140px;filter:drop-shadow(0 20px 40px rgba(255,77,0,.3))">
+        🖥️
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ PRODUCTS ══════════════════════ -->
+<section class="section-wrap" id="products-section">
+  <div class="container">
+    <div class="row align-items-end mb-4">
+      <div class="col">
+        <div class="section-label">Öne Çıkanlar</div>
+        <h2 class="section-title">Popüler Ürünler</h2>
+        <p class="section-sub">En çok tercih edilen ürünlerimiz</p>
+      </div>
+      <div class="col-auto">
+        <div class="btn-group btn-group-sm" role="group">
+          <input type="radio" class="btn-check" name="cat" id="c0" checked autocomplete="off">
+          <label class="btn btn-outline-secondary" for="c0" style="border-radius:8px 0 0 8px;font-size:12px">Tümü</label>
+          <input type="radio" class="btn-check" name="cat" id="c1" autocomplete="off">
+          <label class="btn btn-outline-secondary" for="c1" style="font-size:12px">Elektronik</label>
+          <input type="radio" class="btn-check" name="cat" id="c2" autocomplete="off">
+          <label class="btn btn-outline-secondary" for="c2" style="border-radius:0 8px 8px 0;font-size:12px">Aksesuar</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3" id="productGrid">
+      <!-- JS ile doldurulur -->
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ MODAL: ÜRÜN ══════════════════════ -->
+<div class="modal fade" id="productModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalProductName">Ürün Adı</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-product-img" id="modalProductEmoji">📱</div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <div style="font-size:13px;color:var(--muted)">Fiyat</div>
+            <div style="font-size:28px;font-weight:800;font-family:'Syne',sans-serif" id="modalProductPrice">₺0</div>
+          </div>
+          <div>
+            <div style="font-size:13px;color:var(--muted)">Stok</div>
+            <div style="font-size:16px;font-weight:700;color:#22c55e" id="modalProductStock">✓ Mevcut</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" style="font-size:13px;font-weight:600">Adet</label>
+          <div class="input-group" style="max-width:140px">
+            <button class="btn btn-outline-secondary" onclick="changeQty(-1)">−</button>
+            <input type="number" class="form-control text-center" id="qtyInput" value="1" min="1" max="10" style="border-radius:0">
+            <button class="btn btn-outline-secondary" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <button class="btn w-100" style="background:var(--ink);color:#fff;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;padding:12px" onclick="addToCart()">
+          <i class="bi bi-bag-plus me-2"></i>Sepete Ekle
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="code-drawer" style="border-radius:12px;margin-bottom:40px">
+    <button class="code-drawer-toggle" onclick="toggleDrawer(this)">
+      <i class="bi bi-code-slash"></i>
+      <span>Modal kodu — Bootstrap <span class="lines-badge lb-b">8 satır</span> vs Vanilla <span class="lines-badge lb-v">68 satır</span></span>
+      <span class="toggle-arrow">▼</span>
+    </button>
+    <div class="code-drawer-body">
+      <div class="code-panel code-panel-vanilla">
+        <span class="code-panel-label lbl-v">Vanilla JS <span class="lines-badge lb-v">68 satır</span></span>
+        <pre class="code-lines"><span class="cmt">/* CSS: backdrop, scroll-lock, animasyon */</span>
+<span class="cls">.backdrop</span> { position:fixed; inset:0;
+  background:rgba(0,0,0,.5); opacity:0;
+  transition:opacity .2s; }
+<span class="cls">.modal</span> { position:fixed; inset:0;
+  display:none; align-items:center;
+  justify-content:center; }
+
+<span class="cmt">/* JS: show/hide + focus-trap + ESC */</span>
+<span class="kw">function</span> showModal(id) {
+  <span class="cmt">// scroll lock</span>
+  document.body.style.overflow = <span class="str">'hidden'</span>;
+  <span class="cmt">// backdrop oluştur</span>
+  backdrop = document.createElement(<span class="str">'div'</span>);
+  backdrop.className = <span class="str">'backdrop'</span>;
+  document.body.appendChild(backdrop);
+  <span class="cmt">// focus trap</span>
+  <span class="kw">const</span> focusable = modal.querySelectorAll(
+    <span class="str">'button,input,select,[tabindex]'</span>);
+  document.addEventListener(<span class="str">'keydown'</span>, trapFocus);
+  <span class="cmt">// ESC kapatma</span>
+  document.addEventListener(<span class="str">'keydown'</span>, onEsc);
+  <span class="cmt">// animasyon</span>
+  requestAnimationFrame(() =&gt; {
+    requestAnimationFrame(() =&gt; {
+      modal.classList.add(<span class="str">'show'</span>);
+    });
+  });
+}
+<span class="cmt">/* + hideModal, trapFocus, cleanup... */</span></pre>
+      </div>
+      <div class="code-panel">
+        <span class="code-panel-label lbl-b">Bootstrap 5 <span class="lines-badge lb-b">8 satır</span></span>
+        <pre class="code-lines"><span class="cmt">&lt;!-- Açma: sadece 2 attribute --&gt;</span>
+&lt;<span class="kw">button</span>
+  data-bs-toggle=<span class="str">"modal"</span>
+  data-bs-target=<span class="str">"#productModal"</span>&gt;
+  Ürünü İncele
+&lt;/<span class="kw">button</span>&gt;
+
+<span class="cmt">&lt;!-- Modal yapısı: 6 satır --&gt;</span>
+&lt;<span class="kw">div</span> class=<span class="str">"modal fade"</span> id=<span class="str">"productModal"</span>&gt;
+  &lt;<span class="kw">div</span> class=<span class="str">"modal-dialog modal-dialog-centered"</span>&gt;
+    &lt;<span class="kw">div</span> class=<span class="str">"modal-content"</span>&gt;
+      <span class="cmt">&lt;!-- içerik --&gt;</span>
+    &lt;/<span class="kw">div</span>&gt;
+  &lt;/<span class="kw">div</span>&gt;
+&lt;/<span class="kw">div</span>&gt;
+
+<span class="cmt">/* JS: Sıfır satır. */</span>
+<span class="cmt">/* Scroll-lock, focus-trap, */</span>
+<span class="cmt">/* ESC, backdrop — hepsi dahil. */</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ FEATURES ══════════════════════ -->
+<section class="features-wrap">
+  <div class="container">
+    <div class="row align-items-end mb-5">
+      <div class="col">
+        <div class="section-label" style="color:var(--accent)">Neden Biz?</div>
+        <h2 class="section-title" style="color:#fff">Farkımız</h2>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4"><div class="feature-item">
+        <div class="feature-icon"><i class="bi bi-truck"></i></div>
+        <div class="feature-title">Ücretsiz Kargo</div>
+        <div class="feature-desc">500₺ üzeri tüm siparişlerde kapınıza kadar ücretsiz teslimat.</div>
+      </div></div>
+      <div class="col-md-4"><div class="feature-item">
+        <div class="feature-icon"><i class="bi bi-arrow-return-left"></i></div>
+        <div class="feature-title">30 Gün İade</div>
+        <div class="feature-desc">Beğenmediğiniz ürünleri 30 gün içinde sorunsuz iade edin.</div>
+      </div></div>
+      <div class="col-md-4"><div class="feature-item">
+        <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+        <div class="feature-title">Güvenli Ödeme</div>
+        <div class="feature-desc">SSL şifreleme ve 3D Secure ile güvenli alışveriş deneyimi.</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ CHECKOUT FORM ══════════════════════ -->
+<section class="section-wrap">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="demo-section">
+          <div class="demo-section-inner">
+            <div class="section-label">Hızlı Sipariş</div>
+            <h2 class="section-title mb-1">Sipariş Formu</h2>
+            <p class="section-sub mb-4">Alanları doldurun, formu gönderin</p>
+
+            <form class="checkout-form needs-validation" novalidate id="checkoutForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Ad</label>
+                  <input type="text" class="form-control" placeholder="Ahmet" required minlength="2">
+                  <div class="invalid-feedback">Ad en az 2 karakter olmalı.</div>
+                  <div class="valid-feedback">✓ Güzel!</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Soyad</label>
+                  <input type="text" class="form-control" placeholder="Yılmaz" required>
+                  <div class="invalid-feedback">Soyad zorunludur.</div>
+                  <div class="valid-feedback">✓ Güzel!</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">E-posta</label>
+                  <input type="email" class="form-control" placeholder="ahmet@example.com" required>
+                  <div class="invalid-feedback">Geçerli bir e-posta girin.</div>
+                  <div class="valid-feedback">✓ Güzel!</div>
+                </div>
+                <div class="col-md-8">
+                  <label class="form-label">Adres</label>
+                  <input type="text" class="form-control" placeholder="Cadde, bina no..." required>
+                  <div class="invalid-feedback">Adres zorunludur.</div>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Posta Kodu</label>
+                  <input type="text" class="form-control" placeholder="34000" required pattern="\d{5}">
+                  <div class="invalid-feedback">5 haneli posta kodu girin.</div>
+                </div>
+              </div>
+              <div class="mt-4 d-flex gap-3 flex-wrap">
+                <button class="btn btn-primary px-4 py-3" style="border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;background:var(--ink);border-color:var(--ink)" type="submit">
+                  Siparişi Onayla <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+                <button class="btn btn-outline-secondary px-4 py-3" style="border-radius:10px" type="reset" onclick="resetForm()">
+                  Temizle
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="code-drawer">
+            <button class="code-drawer-toggle" onclick="toggleDrawer(this)">
+              <i class="bi bi-code-slash"></i>
+              <span>Form validation kodu — Bootstrap <span class="lines-badge lb-b">9 satır</span> vs Vanilla <span class="lines-badge lb-v">72 satır</span></span>
+              <span class="toggle-arrow">▼</span>
+            </button>
+            <div class="code-drawer-body">
+              <div class="code-panel code-panel-vanilla">
+                <span class="code-panel-label lbl-v">Vanilla JS <span class="lines-badge lb-v">72 satır</span></span>
+                <pre class="code-lines"><span class="cmt">/* Her alan için ayrı JS gerekiyor */</span>
+<span class="kw">const</span> inputs = form.querySelectorAll(<span class="str">'input'</span>);
+inputs.forEach(input =&gt; {
+  input.addEventListener(<span class="str">'blur'</span>, () =&gt; validateField(input));
+  input.addEventListener(<span class="str">'input'</span>, () =&gt; clearError(input));
+});
+
+<span class="kw">function</span> validateField(input) {
+  <span class="kw">if</span> (!input.value.trim()) {
+    showError(input, <span class="str">'Bu alan zorunludur'</span>);
+    <span class="kw">return false</span>;
+  }
+  <span class="kw">if</span> (input.type === <span class="str">'email'</span> &&
+      !/<span class="str">/^[^\s@]+@[^\s@]+\.[^\s@]+$/</span>/.test(input.value)) {
+    showError(input, <span class="str">'Geçersiz e-posta'</span>);
+    <span class="kw">return false</span>;
+  }
+  <span class="kw">if</span> (input.pattern && !<span class="kw">new</span> RegExp(input.pattern).test(input.value)) {
+    showError(input, <span class="str">'Format hatalı'</span>);
+    <span class="kw">return false</span>;
+  }
+  showSuccess(input);
+  <span class="kw">return true</span>;
+}
+<span class="cmt">/* + showError, showSuccess, CSS stilleri... */</span></pre>
+              </div>
+              <div class="code-panel">
+                <span class="code-panel-label lbl-b">Bootstrap 5 <span class="lines-badge lb-b">9 satır</span></span>
+                <pre class="code-lines"><span class="cmt">&lt;!-- HTML: sadece sınıflar ve attribute'lar --&gt;</span>
+&lt;<span class="kw">form</span> class=<span class="str">"needs-validation"</span> novalidate&gt;
+  &lt;<span class="kw">input</span> type=<span class="str">"email"</span> class=<span class="str">"form-control"</span> required&gt;
+  &lt;<span class="kw">div</span> class=<span class="str">"invalid-feedback"</span>&gt;Hatalı e-posta.&lt;/<span class="kw">div</span>&gt;
+  &lt;<span class="kw">div</span> class=<span class="str">"valid-feedback"</span>&gt;✓ Güzel!&lt;/<span class="kw">div</span>&gt;
+&lt;/<span class="kw">form</span>&gt;
+
+<span class="cmt">/* JS: sadece 3 satır */</span>
+form.addEventListener(<span class="str">'submit'</span>, e =&gt; {
+  e.preventDefault();
+  form.classList.add(<span class="str">'was-validated'</span>);
+});
+<span class="cmt">/* Kırmızı/yeşil border, hata mesajları,</span>
+<span class="cmt">   valid/invalid ikonları — tamamen CSS. */</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FAQ / ACCORDION ══════════════════════ -->
+<section class="section-wrap" style="background:var(--paper);padding-top:0">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="demo-section">
+          <div class="demo-section-inner">
+            <div class="section-label">Sıkça Sorulan</div>
+            <h2 class="section-title mb-4">Sorular</h2>
+
+            <div class="accordion" id="faqAccordion">
+              <div class="accordion-item" style="border-radius:12px;overflow:hidden;margin-bottom:8px;border:1px solid var(--border)">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="font-family:'Syne',sans-serif;font-weight:600;font-size:15px">
+                    Kargo ne zaman gelir?
+                  </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body" style="font-size:14px;color:var(--muted);line-height:1.7">
+                    Siparişiniz onaylandıktan sonra 1-3 iş günü içinde kargoya verilir ve 2-5 gün içinde kapınıza ulaşır.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item" style="border-radius:12px;overflow:hidden;margin-bottom:8px;border:1px solid var(--border)">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" style="font-family:'Syne',sans-serif;font-weight:600;font-size:15px">
+                    İade nasıl yapılır?
+                  </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body" style="font-size:14px;color:var(--muted);line-height:1.7">
+                    Ürünü aldıktan sonra 30 gün içinde iade formunu doldurabilirsiniz. Ücret iadeniz 3-5 iş günü içinde hesabınıza yansır.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item" style="border-radius:12px;overflow:hidden;border:1px solid var(--border)">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" style="font-family:'Syne',sans-serif;font-weight:600;font-size:15px">
+                    Hangi ödeme yöntemleri kabul edilir?
+                  </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body" style="font-size:14px;color:var(--muted);line-height:1.7">
+                    Kredi kartı, banka kartı, havale/EFT ve kapıda ödeme ile alışveriş yapabilirsiniz. 12 aya varan taksit imkânı mevcuttur.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="code-drawer">
+            <button class="code-drawer-toggle" onclick="toggleDrawer(this)">
+              <i class="bi bi-code-slash"></i>
+              <span>Accordion kodu — Bootstrap <span class="lines-badge lb-b">6 satır</span> vs Vanilla <span class="lines-badge lb-v">44 satır</span></span>
+              <span class="toggle-arrow">▼</span>
+            </button>
+            <div class="code-drawer-body">
+              <div class="code-panel code-panel-vanilla">
+                <span class="code-panel-label lbl-v">Vanilla JS <span class="lines-badge lb-v">44 satır</span></span>
+                <pre class="code-lines"><span class="cmt">/* Accordion mantığı + animasyon */</span>
+document.querySelectorAll(<span class="str">'.faq-btn'</span>)
+  .forEach(btn =&gt; {
+    btn.addEventListener(<span class="str">'click'</span>, () =&gt; {
+      <span class="kw">const</span> body = btn.nextElementSibling;
+      <span class="kw">const</span> isOpen = body.style.maxHeight;
+      <span class="cmt">// Tümünü kapat</span>
+      document.querySelectorAll(<span class="str">'.faq-body'</span>)
+        .forEach(b =&gt; {
+          b.style.maxHeight = <span class="kw">null</span>;
+          b.style.opacity = <span class="str">'0'</span>;
+        });
+      document.querySelectorAll(<span class="str">'.faq-btn'</span>)
+        .forEach(b =&gt; b.classList.remove(<span class="str">'active'</span>));
+      <span class="cmt">// Seçiliyi aç</span>
+      <span class="kw">if</span> (!isOpen) {
+        body.style.maxHeight = body.scrollHeight + <span class="str">'px'</span>;
+        body.style.opacity = <span class="str">'1'</span>;
+        btn.classList.add(<span class="str">'active'</span>);
+        btn.setAttribute(<span class="str">'aria-expanded'</span>, <span class="str">'true'</span>);
+      }
+    });
+  });</pre>
+              </div>
+              <div class="code-panel">
+                <span class="code-panel-label lbl-b">Bootstrap 5 <span class="lines-badge lb-b">6 satır</span></span>
+                <pre class="code-lines"><span class="cmt">&lt;!-- data attribute'ları yeterli --&gt;</span>
+&lt;<span class="kw">div</span> id=<span class="str">"faqAccordion"</span>&gt;
+  &lt;<span class="kw">button</span>
+    data-bs-toggle=<span class="str">"collapse"</span>
+    data-bs-target=<span class="str">"#faq1"</span>&gt;
+    Kargo ne zaman gelir?
+  &lt;/<span class="kw">button</span>&gt;
+  &lt;<span class="kw">div</span> id=<span class="str">"faq1"</span>
+    class=<span class="str">"accordion-collapse collapse"</span>
+    data-bs-parent=<span class="str">"#faqAccordion"</span>&gt;
+    <span class="cmt">&lt;!-- içerik --&gt;</span>
+  &lt;/<span class="kw">div</span>&gt;
+&lt;/<span class="kw">div</span>&gt;
+
+<span class="cmt">/* JS: Sıfır satır. */</span>
+<span class="cmt">/* data-bs-parent ile sadece */</span>
+<span class="cmt">/* biri açık kalır — otomatik. */</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ NEWSLETTER ══════════════════════ -->
+<section class="newsletter-wrap">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-7">
+        <h2>Fırsatları Kaçırma</h2>
+        <p>Haftalık kampanyalar ve yeni ürünler için bültenimize abone ol.</p>
+        <div class="newsletter-form mx-auto" style="max-width:480px">
+          <input type="email" class="newsletter-input" placeholder="E-posta adresin" id="newsletterEmail">
+          <button class="newsletter-btn" onclick="subscribeNewsletter()">Abone Ol</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ MODAL: KAMPANYA ══════════════════════ -->
+<div class="modal fade" id="campaignModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background:linear-gradient(135deg,#ff4d00,#ff8c00)">
+        <h5 class="modal-title">🔥 Sezon Kampanyaları</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter:brightness(10)"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background:#fff7ed;border:1px solid #fed7aa">
+            <div style="font-size:32px">📱</div>
+            <div><div style="font-weight:700;font-size:15px">Elektronik %25 İndirim</div><div style="font-size:13px;color:#9a3412">Tüm elektronik ürünlerde</div></div>
+          </div>
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background:#f0fdf4;border:1px solid #bbf7d0">
+            <div style="font-size:32px">🎧</div>
+            <div><div style="font-weight:700;font-size:15px">Aksesuar 2 Al 1 Öde</div><div style="font-size:13px;color:#15803d">Seçili aksesuar ürünlerde</div></div>
+          </div>
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background:#eff6ff;border:1px solid #bfdbfe">
+            <div style="font-size:32px">🚚</div>
+            <div><div style="font-weight:700;font-size:15px">200₺+ Ücretsiz Kargo</div><div style="font-size:13px;color:#1d4ed8">Tüm siparişlerde geçerli</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal" style="border-radius:8px">Kapat</button>
+        <button class="btn btn-sm" style="background:var(--accent);color:#fff;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700" onclick="scrollToProducts();bootstrap.Modal.getInstance(document.getElementById('campaignModal')).hide()">
+          Alışverişe Başla →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="mainToast" class="toast text-bg-dark border-0 align-items-center" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg">İşlem tamamlandı.</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p><strong>TechNest</strong> — Bu sayfa bir Bootstrap 5 demo sunumudur. Her bölümün altındaki <strong>Kod Karşılaştırması</strong> butonuna tıklayın.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── Ürün verileri ──────────────────────────────────────────
+const products = [
+  { id:1, name:'AirPods Pro 2', category:'Elektronik', price:3299, stock:24, emoji:'🎧', bg:'#f0f4ff', badge:'Çok Satan' },
+  { id:2, name:'MacBook Kılıfı', category:'Aksesuar',  price:449,  stock:89, emoji:'💼', bg:'#f0fdf4', badge:null },
+  { id:3, name:'Mekanik Klavye', category:'Elektronik', price:1890, stock:12, emoji:'⌨️', bg:'#fff7ed', badge:'Son 12' },
+  { id:4, name:'USB-C Hub 7\'li', category:'Elektronik', price:849,  stock:55, emoji:'🔌', bg:'#fef2f2', badge:null },
+  { id:5, name:'MagSafe Kılıf',  category:'Aksesuar',  price:249,  stock:134, emoji:'📱', bg:'#faf5ff', badge:'Yeni' },
+  { id:6, name:'Laptop Standı',  category:'Aksesuar',  price:599,  stock:67, emoji:'🖥️', bg:'#ecfdf5', badge:null },
+];
+
+let cartCount = 0;
+let currentProduct = null;
+
+// ── Ürünleri render et ──────────────────────────────────────
+function renderProducts(list) {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = list.map(p => `
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="product-card" style="height:100%">
+        <div class="product-img" style="background:${p.bg}">
+          ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+          ${p.emoji}
+        </div>
+        <div class="product-body">
+          <div class="product-category">${p.category}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-price">₺${p.price.toLocaleString('tr')}<span>/ adet</span></div>
+          <button class="btn-add" onclick="openProduct(${p.id})">
+            <i class="bi bi-bag-plus"></i> İncele
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderProducts(products);
+
+// ── Ürün modalı ────────────────────────────────────────────
+function openProduct(id) {
+  currentProduct = products.find(p => p.id === id);
+  document.getElementById('modalProductName').textContent = currentProduct.name;
+  document.getElementById('modalProductEmoji').textContent = currentProduct.emoji;
+  document.getElementById('modalProductPrice').textContent = '₺' + currentProduct.price.toLocaleString('tr');
+  document.getElementById('modalProductStock').textContent = currentProduct.stock > 10 ? '✓ Stokta var' : `⚠ Son ${currentProduct.stock} adet`;
+  document.getElementById('qtyInput').value = 1;
+  new bootstrap.Modal(document.getElementById('productModal')).show();
+}
+
+function changeQty(d) {
+  const el = document.getElementById('qtyInput');
+  const v = Math.min(10, Math.max(1, parseInt(el.value) + d));
+  el.value = v;
+}
+
+function addToCart() {
+  const qty = parseInt(document.getElementById('qtyInput').value);
+  cartCount += qty;
+  document.querySelector('.cart-btn').innerHTML = `<i class="bi bi-bag me-1"></i>Sepet (${cartCount})`;
+  bootstrap.Modal.getInstance(document.getElementById('productModal')).hide();
+  showToast(`${currentProduct.name} sepete eklendi! 🛍`, 'success');
+}
+
+// ── Form validation ────────────────────────────────────────
+document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  this.classList.add('was-validated');
+  if (this.checkValidity()) {
+    showToast('Siparişiniz alındı! ✅ Teşekkürler.', 'success');
+    this.reset();
+    this.classList.remove('was-validated');
+  }
+});
+
+function resetForm() {
+  const f = document.getElementById('checkoutForm');
+  f.classList.remove('was-validated');
+}
+
+// ── Kod drawer toggle ──────────────────────────────────────
+function toggleDrawer(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+// ── Toast ──────────────────────────────────────────────────
+function showToast(msg, type) {
+  const t = document.getElementById('mainToast');
+  t.className = `toast align-items-center border-0 text-bg-${type === 'success' ? 'success' : 'dark'}`;
+  document.getElementById('toastMsg').textContent = msg;
+  new bootstrap.Toast(t, { delay: 3500 }).show();
+}
+
+function showCartToast()     { showToast('Sepetinizde ' + cartCount + ' ürün var.'); }
+function subscribeNewsletter() {
+  const e = document.getElementById('newsletterEmail').value;
+  if (!e || !e.includes('@')) { showToast('Geçerli bir e-posta girin.', 'danger'); return; }
+  document.getElementById('newsletterEmail').value = '';
+  showToast('Başarıyla abone oldunuz! 🎉', 'success');
+}
+
+function scrollToProducts() {
+  document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

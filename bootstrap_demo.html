@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap 5 — Kapsamlı Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --bs-font-sans-serif: 'Segoe UI', system-ui, sans-serif; }
+    body { scroll-behavior: smooth; }
+    .section-title { font-weight: 700; color: #7952B3; border-left: 5px solid #7952B3; padding-left: 12px; margin-bottom: 1.5rem; }
+    .demo-section { padding: 3rem 0; border-bottom: 1px solid #dee2e6; }
+    .code-tag { font-family: 'Consolas', monospace; font-size: 0.82rem; background: #EDE9F7; color: #7952B3; padding: 2px 6px; border-radius: 4px; }
+    .hero-gradient { background: linear-gradient(135deg, #0D1B2A 0%, #7952B3 100%); }
+    .feature-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(121,82,179,0.18) !important; }
+    #scrollspy-demo { height: 200px; overflow-y: scroll; border: 1px solid #dee2e6; padding: 1rem; border-radius: 8px; }
+    .grid-cell { background: #7952B3; color: white; padding: 0.6rem; text-align: center; border-radius: 6px; font-family: Consolas; font-size: 0.85rem; margin-bottom: 6px; }
+    .grid-cell-light { background: #9D78D4; }
+    .breadcrumb-item + .breadcrumb-item::before { color: #7952B3; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════ -->
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="background:#0D1B2A">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-white" href="#">
+      <span style="color:#7952B3">⬟</span> Bootstrap Demo
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link text-white-50" href="#grid">Grid</a></li>
+        <li class="nav-item"><a class="nav-link text-white-50" href="#typography">Typography</a></li>
+        <li class="nav-item"><a class="nav-link text-white-50" href="#buttons">Butonlar</a></li>
+        <li class="nav-item"><a class="nav-link text-white-50" href="#cards">Kartlar</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white-50" href="#" data-bs-toggle="dropdown">Daha Fazla</a>
+          <ul class="dropdown-menu">
+            <li><h6 class="dropdown-header">Bileşenler</h6></li>
+            <li><a class="dropdown-item" href="#forms">Formlar</a></li>
+            <li><a class="dropdown-item" href="#tables">Tablolar</a></li>
+            <li><a class="dropdown-item" href="#modals">Modals</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">Yeni Bölümler</h6></li>
+            <li><a class="dropdown-item" href="#container">Container Türleri</a></li>
+            <li><a class="dropdown-item" href="#collapse-standalone">Collapse</a></li>
+            <li><a class="dropdown-item" href="#tooltips-popovers">Tooltips & Popovers</a></li>
+            <li><a class="dropdown-item" href="#offcanvas-section">Offcanvas</a></li>
+            <li><a class="dropdown-item" href="#breadcrumb-pagination">Breadcrumb & Pagination</a></li>
+            <li><a class="dropdown-item" href="#icons-gallery">Bootstrap Icons</a></li>
+            <li><a class="dropdown-item" href="#darkmode-section">Dark Mode</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#utilities">Utilities</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="d-flex gap-2">
+        <button class="btn btn-sm btn-outline-light" onclick="toggleTheme()">
+          <i class="bi bi-moon-stars-fill"></i> Dark Mode
+        </button>
+        <a class="btn btn-sm btn-purple" style="background:#7952B3;border-color:#7952B3;color:white" href="https://getbootstrap.com" target="_blank">Dökümanlar</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════ -->
+<section class="hero-gradient text-white py-5">
+  <div class="container py-4">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-7">
+        <span class="badge bg-white text-dark mb-3 fs-6">Bootstrap 5</span>
+        <h1 class="display-4 fw-bold mb-3">Web Programlama <br><span style="color:#a78bfa">Demo Projesi</span></h1>
+        <p class="lead text-white-75 mb-4">Bootstrap 5 ile grid sistemi, bileşenler ve utility sınıflarının kapsamlı demosu. Tüm konular canlı örneklerle gösterilmektedir.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <button class="btn btn-light btn-lg fw-semibold" data-bs-toggle="modal" data-bs-target="#welcomeModal">
+            <i class="bi bi-play-circle"></i> Tanıtım Videosu
+          </button>
+          <a class="btn btn-outline-light btn-lg" href="#grid">Demo'yu Gör</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="row g-3 text-center">
+          <div class="col-6"><div class="card border-0 h-100" style="background:rgba(255,255,255,0.1)"><div class="card-body py-3"><div class="display-5 fw-bold">12</div><div class="small text-white-50">Sütunlu Grid</div></div></div></div>
+          <div class="col-6"><div class="card border-0 h-100" style="background:rgba(255,255,255,0.1)"><div class="card-body py-3"><div class="display-5 fw-bold">6</div><div class="small text-white-50">Breakpoint</div></div></div></div>
+          <div class="col-6"><div class="card border-0 h-100" style="background:rgba(255,255,255,0.1)"><div class="card-body py-3"><div class="display-5 fw-bold">50+</div><div class="small text-white-50">Bileşen</div></div></div></div>
+          <div class="col-6"><div class="card border-0 h-100" style="background:rgba(255,255,255,0.1)"><div class="card-body py-3"><div class="display-5 fw-bold">v5.3</div><div class="small text-white-50">Güncel Sürüm</div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container py-2">
+
+  <!-- ═══════════════════════════════════════════════
+       GRİD SİSTEMİ
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="grid">
+    <h2 class="section-title"><i class="bi bi-grid-3x3-gap"></i> Grid Sistemi</h2>
+
+    <h5 class="fw-semibold mb-3 text-muted">12 Sütunlu Grid — Eşit Kolonlar</h5>
+    <div class="row g-2 mb-4">
+      <div class="col-1"><div class="grid-cell">col-1</div></div>
+      <div class="col-1"><div class="grid-cell grid-cell-light">col-1</div></div>
+      <div class="col-1"><div class="grid-cell">col-1</div></div>
+      <div class="col-1"><div class="grid-cell grid-cell-light">col-1</div></div>
+      <div class="col-1"><div class="grid-cell">col-1</div></div>
+      <div class="col-1"><div class="grid-cell grid-cell-light">col-1</div></div>
+      <div class="col-1"><div class="grid-cell">col-1</div></div>
+      <div class="col-1"><div class="grid-cell grid-cell-light">col-1</div></div>
+      <div class="col-1"><div class="grid-cell">col-1</div></div>
+      <div class="col-1"><div class="grid-cell grid-cell-light">col-1</div></div>
+      <div class="col-1"><div class="grid-cell">col-1</div></div>
+      <div class="col-1"><div class="grid-cell grid-cell-light">col-1</div></div>
+    </div>
+
+    <div class="row g-2 mb-2">
+      <div class="col-4"><div class="grid-cell">col-4</div></div>
+      <div class="col-4"><div class="grid-cell grid-cell-light">col-4</div></div>
+      <div class="col-4"><div class="grid-cell">col-4</div></div>
+    </div>
+    <div class="row g-2 mb-2">
+      <div class="col-3"><div class="grid-cell">col-3</div></div>
+      <div class="col-6"><div class="grid-cell grid-cell-light">col-6</div></div>
+      <div class="col-3"><div class="grid-cell">col-3</div></div>
+    </div>
+    <div class="row g-2 mb-4">
+      <div class="col-8"><div class="grid-cell">col-8</div></div>
+      <div class="col-4"><div class="grid-cell grid-cell-light">col-4</div></div>
+    </div>
+
+    <h5 class="fw-semibold mb-3 text-muted">Responsive Grid — Ekranı Küçült/Büyüt!</h5>
+    <div class="row g-3">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card border-primary text-center p-3"><div class="fw-bold text-primary">Kart 1</div><small class="text-muted">col-12 col-sm-6 col-md-4 col-lg-3</small></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card border-success text-center p-3"><div class="fw-bold text-success">Kart 2</div><small class="text-muted">col-12 col-sm-6 col-md-4 col-lg-3</small></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card border-warning text-center p-3"><div class="fw-bold text-warning">Kart 3</div><small class="text-muted">col-12 col-sm-6 col-md-4 col-lg-3</small></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-12 col-lg-3">
+        <div class="card border-danger text-center p-3"><div class="fw-bold text-danger">Kart 4</div><small class="text-muted">col-12 col-sm-6 col-md-12 col-lg-3</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       TYPOGRAPHY
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="typography">
+    <h2 class="section-title"><i class="bi bi-type"></i> Typography</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <h1>h1 — Başlık Birinci</h1>
+        <h2>h2 — Başlık İkinci</h2>
+        <h3>h3 — Başlık Üçüncü</h3>
+        <h4>h4 — Başlık Dördüncü</h4>
+        <h5>h5 — Başlık Beşinci</h5>
+        <h6>h6 — Başlık Altıncı</h6>
+        <hr>
+        <p class="display-6">display-6 büyük metin</p>
+        <p class="lead">Bu bir <strong>lead</strong> paragraftır. Öne çıkmak için kullanılır.</p>
+        <p>Normal paragraf metni. <strong>Kalın</strong>, <em>italik</em>, <mark>işaretli</mark>, <del>üstü çizili</del>, <u>altı çizili</u>.</p>
+        <blockquote class="blockquote border-start border-primary ps-3">
+          <p>"Bootstrap ile hızlı ve güzel arayüzler oluşturabilirsiniz."</p>
+          <footer class="blockquote-footer">Bootstrap Dökümanları</footer>
+        </blockquote>
+      </div>
+      <div class="col-md-6">
+        <p class="text-primary fw-bold">text-primary + fw-bold</p>
+        <p class="text-success">text-success</p>
+        <p class="text-danger">text-danger</p>
+        <p class="text-warning">text-warning</p>
+        <p class="text-info">text-info</p>
+        <p class="text-muted">text-muted (soluk)</p>
+        <p class="text-center text-secondary">text-center — ortalanmış</p>
+        <p class="text-uppercase text-primary">text-uppercase</p>
+        <p class="text-lowercase text-success">TEXT-LOWERCASE</p>
+        <p class="fst-italic">fst-italic — italik</p>
+        <p class="fw-light">fw-light — ince yazı</p>
+        <p class="fw-bold">fw-bold — kalın yazı</p>
+        <p><span class="badge bg-primary">Birincil</span> <span class="badge bg-success">Başarı</span> <span class="badge bg-danger">Hata</span> <span class="badge bg-warning text-dark">Uyarı</span> <span class="badge rounded-pill bg-info text-dark">Yuvarlak</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       BUTONLAR
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="buttons">
+    <h2 class="section-title"><i class="bi bi-hand-index"></i> Butonlar</h2>
+
+    <h6 class="text-muted mb-3">Solid Butonlar</h6>
+    <div class="d-flex flex-wrap gap-2 mb-4">
+      <button class="btn btn-primary">btn-primary</button>
+      <button class="btn btn-secondary">btn-secondary</button>
+      <button class="btn btn-success">btn-success</button>
+      <button class="btn btn-danger">btn-danger</button>
+      <button class="btn btn-warning">btn-warning</button>
+      <button class="btn btn-info">btn-info</button>
+      <button class="btn btn-light">btn-light</button>
+      <button class="btn btn-dark">btn-dark</button>
+    </div>
+
+    <h6 class="text-muted mb-3">Outline Butonlar</h6>
+    <div class="d-flex flex-wrap gap-2 mb-4">
+      <button class="btn btn-outline-primary">outline-primary</button>
+      <button class="btn btn-outline-secondary">outline-secondary</button>
+      <button class="btn btn-outline-success">outline-success</button>
+      <button class="btn btn-outline-danger">outline-danger</button>
+      <button class="btn btn-outline-warning">outline-warning</button>
+      <button class="btn btn-outline-info">outline-info</button>
+    </div>
+
+    <h6 class="text-muted mb-3">Boyutlar, Özellikler ve Grup</h6>
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+      <button class="btn btn-primary btn-lg"><i class="bi bi-check-circle"></i> Büyük</button>
+      <button class="btn btn-primary">Normal</button>
+      <button class="btn btn-primary btn-sm">Küçük</button>
+      <button class="btn btn-success rounded-pill px-4">Yuvarlak</button>
+      <button class="btn btn-danger" disabled>Disabled</button>
+      <button class="btn btn-warning position-relative">
+        Bildirim <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9+</span>
+      </button>
+    </div>
+
+    <div class="d-flex gap-3 flex-wrap">
+      <div class="btn-group">
+        <button class="btn btn-outline-primary">Sol</button>
+        <button class="btn btn-outline-primary">Orta</button>
+        <button class="btn btn-outline-primary">Sağ</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary">Seçenek</button>
+        <button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
+        <ul class="dropdown-menu"><li><a class="dropdown-item" href="#">Seçenek 1</a></li><li><a class="dropdown-item" href="#">Seçenek 2</a></li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       KARTLAR
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="cards">
+    <h2 class="section-title"><i class="bi bi-card-list"></i> Cards — Kart Bileşeni</h2>
+    <div class="row g-4">
+      <!-- Temel kart -->
+      <div class="col-md-4">
+        <div class="card shadow-sm feature-card h-100">
+          <div class="card-header fw-bold" style="background:#7952B3;color:white">
+            <i class="bi bi-star-fill"></i> Temel Kart
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Kart Başlığı</h5>
+            <p class="card-text text-muted">Bootstrap kartları içerik göstermek için kullanışlı bileşenlerdir. Başlık, metin ve footer içerebilir.</p>
+            <a href="#" class="btn btn-primary btn-sm">Daha Fazla</a>
+          </div>
+          <div class="card-footer text-muted small">Son güncelleme: Bugün</div>
+        </div>
+      </div>
+      <!-- Renkli kart -->
+      <div class="col-md-4">
+        <div class="card text-bg-success shadow-sm feature-card h-100">
+          <div class="card-body">
+            <h5 class="card-title"><i class="bi bi-check-circle"></i> text-bg-success</h5>
+            <p class="card-text">Renkli arka plan kartları. text-bg-{renk} sınıfı ile hem arka plan hem yazı rengi ayarlanır.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Border kart -->
+      <div class="col-md-4">
+        <div class="card border-danger border-2 shadow-sm feature-card h-100">
+          <div class="card-body">
+            <h5 class="card-title text-danger"><i class="bi bi-exclamation-triangle"></i> border-danger</h5>
+            <p class="card-text text-muted">Renkli kenarlıklı kart. Sadece border rengi değiştirilmiş versiyon.</p>
+            <button class="btn btn-outline-danger btn-sm">İşlem</button>
+          </div>
+        </div>
+      </div>
+      <!-- List group kart -->
+      <div class="col-md-4">
+        <div class="card shadow-sm feature-card h-100">
+          <div class="card-header fw-semibold">Liste Kartı</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">Bootstrap <span class="badge bg-primary rounded-pill">CSS</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Grid Sistemi <span class="badge bg-success rounded-pill">12 col</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Responsive <span class="badge bg-info text-dark rounded-pill">6 BP</span></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Yatay kart -->
+      <div class="col-md-8">
+        <div class="card shadow-sm feature-card h-100">
+          <div class="row g-0 h-100">
+            <div class="col-4 d-flex align-items-center justify-content-center" style="background:linear-gradient(135deg,#7952B3,#0D1B2A);border-radius:8px 0 0 8px">
+              <i class="bi bi-laptop text-white" style="font-size:4rem"></i>
+            </div>
+            <div class="col-8">
+              <div class="card-body h-100 d-flex flex-column justify-content-center">
+                <h5 class="card-title">Yatay Kart</h5>
+                <p class="card-text text-muted">row + col-4/col-8 yapısıyla oluşturulan yatay düzende kart. Haber veya ürün listelerinde sıkça kullanılır.</p>
+                <a href="#" class="btn btn-outline-primary btn-sm">Detay</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       FORMLAR
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="forms">
+    <h2 class="section-title"><i class="bi bi-ui-checks"></i> Forms — Form Bileşenleri</h2>
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Kayıt Formu</div>
+          <div class="card-body">
+            <form novalidate id="demoForm">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Ad Soyad</label>
+                <input type="text" class="form-control" placeholder="Adınızı girin..." required>
+                <div class="invalid-feedback">Ad alanı boş bırakılamaz.</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">E-posta</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" class="form-control" placeholder="ornek@mail.com">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Şifre</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="passInput" placeholder="Şifre...">
+                  <button class="btn btn-outline-secondary" type="button" onclick="togglePass()"><i class="bi bi-eye" id="eyeIcon"></i></button>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Rol Seçin</label>
+                <select class="form-select">
+                  <option value="">Seçiniz...</option>
+                  <option>Frontend Developer</option>
+                  <option>Backend Developer</option>
+                  <option>Full Stack Developer</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Beceri Seviyesi</label>
+                <input type="range" class="form-range" min="0" max="100" id="skillRange" oninput="document.getElementById('skillVal').textContent=this.value">
+                <small class="text-muted">Seviye: <strong id="skillVal">50</strong></small>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">İlgi Alanları</label>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="cb1" checked><label class="form-check-label" for="cb1">Web Tasarım</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="cb2"><label class="form-check-label" for="cb2">Mobile Uygulama</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="cb3"><label class="form-check-label" for="cb3">Yapay Zeka</label></div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Tercih</label>
+                <div class="form-check"><input class="form-check-input" type="radio" name="pref" id="r1" checked><label class="form-check-label" for="r1">Freelance</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="pref" id="r2"><label class="form-check-label" for="r2">Tam Zamanlı</label></div>
+              </div>
+              <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="terms">
+                <label class="form-check-label" for="terms">Kullanım koşullarını kabul ediyorum</label>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <!-- Floating Labels -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header fw-bold">Floating Labels</div>
+          <div class="card-body">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="floatEmail" placeholder="Email">
+              <label for="floatEmail"><i class="bi bi-envelope"></i> E-posta Adresi</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="floatPass" placeholder="Şifre">
+              <label for="floatPass"><i class="bi bi-lock"></i> Şifre</label>
+            </div>
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Mesajınız" id="floatMsg" style="height:100px"></textarea>
+              <label for="floatMsg">Mesajınız</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Group örnekleri -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header fw-bold">Input Groups</div>
+          <div class="card-body">
+            <div class="input-group mb-3">
+              <span class="input-group-text">@</span>
+              <input type="text" class="form-control" placeholder="Kullanıcı adı">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Arama...">
+              <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text">₺</span>
+              <input type="number" class="form-control" placeholder="0.00">
+              <span class="input-group-text">.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Validation -->
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Validation Durumları</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Başarılı Alan</label>
+              <input type="text" class="form-control is-valid" value="Geçerli değer">
+              <div class="valid-feedback"><i class="bi bi-check-circle"></i> Harika görünüyor!</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Hatalı Alan</label>
+              <input type="text" class="form-control is-invalid" value="Hatalı@değer">
+              <div class="invalid-feedback"><i class="bi bi-x-circle"></i> Lütfen geçerli bir değer girin.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       TABLOLAR
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="tables">
+    <h2 class="section-title"><i class="bi bi-table"></i> Tables — Tablo Stilleri</h2>
+    <div class="table-responsive shadow-sm rounded mb-4">
+      <table class="table table-striped table-hover table-bordered align-middle mb-0">
+        <caption class="caption-top text-muted ps-2">Örnek Öğrenci Listesi — <span class="code-tag">table-striped table-hover table-bordered</span></caption>
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Ad Soyad</th>
+            <th>Bölüm</th>
+            <th>Not</th>
+            <th>Durum</th>
+            <th>İşlem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td><td>Ahmet Yılmaz</td><td>Bilgisayar Mühendisliği</td><td><strong>92</strong></td>
+            <td><span class="badge bg-success">Geçti</span></td>
+            <td><button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></td>
+          </tr>
+          <tr class="table-warning">
+            <td>2</td><td>Ayşe Kaya</td><td>Yazılım Mühendisliği</td><td><strong>47</strong></td>
+            <td><span class="badge bg-danger">Kaldı</span></td>
+            <td><button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></td>
+          </tr>
+          <tr>
+            <td>3</td><td>Mehmet Demir</td><td>Bilgisayar Mühendisliği</td><td><strong>78</strong></td>
+            <td><span class="badge bg-success">Geçti</span></td>
+            <td><button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></td>
+          </tr>
+          <tr class="table-info">
+            <td>4</td><td>Fatma Şahin</td><td>Bilgisayar Mühendisliği</td><td><strong>98</strong></td>
+            <td><span class="badge bg-primary">Onur Listesi</span></td>
+            <td><button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></td>
+          </tr>
+          <tr>
+            <td>5</td><td>Ali Öztürk</td><td>Yazılım Mühendisliği</td><td><strong>65</strong></td>
+            <td><span class="badge bg-secondary">Koşullu</span></td>
+            <td><button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       MODALS & ALERTS
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="modals">
+    <h2 class="section-title"><i class="bi bi-window"></i> Modals & Alerts</h2>
+
+    <h6 class="text-muted mb-3">Alerts</h6>
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      <i class="bi bi-info-circle-fill me-2"></i> <strong>alert-primary:</strong> Bilgi mesajı örneği.
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i> <strong>alert-success:</strong> İşlem başarıyla tamamlandı.
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div class="alert alert-danger" role="alert">
+      <i class="bi bi-x-circle-fill me-2"></i> <strong>alert-danger:</strong> Bir hata oluştu!
+    </div>
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-3 fs-4"></i>
+      <div><strong>alert-warning:</strong> Dikkat edilmesi gereken bir durum var. <a href="#" class="alert-link">Detay için tıklayın.</a></div>
+    </div>
+
+    <h6 class="text-muted mb-3 mt-4">Modals — Tıklayın!</h6>
+    <div class="d-flex flex-wrap gap-3">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1"><i class="bi bi-box-arrow-in-right"></i> Standart Modal</button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal2"><i class="bi bi-check2-circle"></i> Form Modalı</button>
+      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal3"><i class="bi bi-trash"></i> Onay Modalı</button>
+      <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal4"><i class="bi bi-arrows-fullscreen"></i> Büyük Modal (lg)</button>
+    </div>
+
+    <!-- Toast Demo -->
+    <h6 class="text-muted mb-3 mt-4">Toast Bildirimleri</h6>
+    <button class="btn btn-warning" onclick="showToast()"><i class="bi bi-bell"></i> Toast Göster</button>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index:1100">
+      <div id="liveToast" class="toast align-items-center text-bg-primary border-0" role="alert">
+        <div class="d-flex">
+          <div class="toast-body"><i class="bi bi-check-circle-fill me-2"></i> İşlem başarıyla tamamlandı!</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       UTİLİTY SINIFLAR
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="utilities">
+    <h2 class="section-title"><i class="bi bi-tools"></i> Utility Classes</h2>
+    <div class="row g-4">
+      <!-- Spacing -->
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-header fw-bold text-white" style="background:#7952B3">Spacing (Boşluk)</div>
+          <div class="card-body">
+            <div class="bg-light p-1 mb-1 text-center text-muted small">p-1</div>
+            <div class="bg-light p-2 mb-1 text-center text-muted small">p-2</div>
+            <div class="bg-light p-3 mb-1 text-center text-muted small">p-3</div>
+            <div class="bg-light p-4 mb-1 text-center text-muted small">p-4</div>
+            <div class="bg-light p-5 text-center text-muted small">p-5</div>
+          </div>
+        </div>
+      </div>
+      <!-- Flexbox -->
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-header fw-bold text-white" style="background:#0D6EFD">Flexbox</div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between bg-light p-2 mb-2 rounded"><span class="badge bg-primary">1</span><span class="badge bg-primary">2</span><span class="badge bg-primary">3</span></div>
+            <div class="d-flex justify-content-center gap-2 bg-light p-2 mb-2 rounded"><span class="badge bg-success">A</span><span class="badge bg-success">B</span><span class="badge bg-success">C</span></div>
+            <div class="d-flex align-items-center gap-2 bg-light p-2 rounded" style="height:70px">
+              <div class="badge bg-danger p-3">Orta</div>
+              <div class="badge bg-warning text-dark p-2 align-self-start">Üst</div>
+              <div class="badge bg-info text-dark p-2 align-self-end">Alt</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Colors -->
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-header fw-bold text-white" style="background:#198754">Arka Plan Renkleri</div>
+          <div class="card-body p-2">
+            <div class="row g-1">
+              <div class="col-6"><div class="bg-primary text-white p-2 rounded text-center small">bg-primary</div></div>
+              <div class="col-6"><div class="bg-secondary text-white p-2 rounded text-center small">bg-secondary</div></div>
+              <div class="col-6"><div class="bg-success text-white p-2 rounded text-center small">bg-success</div></div>
+              <div class="col-6"><div class="bg-danger text-white p-2 rounded text-center small">bg-danger</div></div>
+              <div class="col-6"><div class="bg-warning text-dark p-2 rounded text-center small">bg-warning</div></div>
+              <div class="col-6"><div class="bg-info text-dark p-2 rounded text-center small">bg-info</div></div>
+              <div class="col-6"><div class="bg-light text-dark p-2 rounded text-center small">bg-light</div></div>
+              <div class="col-6"><div class="bg-dark text-white p-2 rounded text-center small">bg-dark</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Border & Shadow -->
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-header fw-bold text-white" style="background:#DC3545">Border & Shadow</div>
+          <div class="card-body">
+            <div class="d-flex flex-wrap gap-3 mb-3">
+              <div class="p-3 border border-primary rounded text-center small">border-primary</div>
+              <div class="p-3 border border-2 border-success rounded-pill text-center small">border-2 rounded-pill</div>
+              <div class="p-3 border border-danger rounded-circle text-center small">rounded-circle</div>
+            </div>
+            <div class="d-flex flex-wrap gap-3">
+              <div class="p-3 shadow-sm bg-white rounded text-center small">shadow-sm</div>
+              <div class="p-3 shadow bg-white rounded text-center small">shadow</div>
+              <div class="p-3 shadow-lg bg-white rounded text-center small">shadow-lg</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       DİĞER BİLEŞENLER
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="others">
+    <h2 class="section-title"><i class="bi bi-collection"></i> Diğer Bileşenler</h2>
+    <div class="row g-4">
+      <!-- Accordion -->
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Accordion</h6>
+        <div class="accordion" id="demoAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#acc1">Bootstrap Grid nedir?</button></h2>
+            <div id="acc1" class="accordion-collapse collapse show" data-bs-parent="#demoAccordion">
+              <div class="accordion-body text-muted">Bootstrap Grid, 12 sütunlu, responsive bir layout sistemidir. Flexbox tabanlıdır ve 6 farklı breakpoint destekler.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc2">Bootstrap 5'te ne değişti?</button></h2>
+            <div id="acc2" class="accordion-collapse collapse" data-bs-parent="#demoAccordion">
+              <div class="accordion-body text-muted">jQuery bağımlılığı kaldırıldı, CSS custom properties eklendi, RTL desteği geldi ve dark mode eklendi.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc3">CDN ve npm arasındaki fark?</button></h2>
+            <div id="acc3" class="accordion-collapse collapse" data-bs-parent="#demoAccordion">
+              <div class="accordion-body text-muted">CDN ile internet bağlantısı gerekir ama kurulum yoktur. npm ile offline çalışabilir, Sass ile özelleştirme yapılabilir.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress & Badges -->
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Progress Bars</h6>
+        <div class="mb-2"><div class="d-flex justify-content-between small mb-1"><span>HTML</span><span>90%</span></div><div class="progress" style="height:18px"><div class="progress-bar bg-primary" style="width:90%">90%</div></div></div>
+        <div class="mb-2"><div class="d-flex justify-content-between small mb-1"><span>CSS / Bootstrap</span><span>85%</span></div><div class="progress" style="height:18px"><div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width:85%"></div></div></div>
+        <div class="mb-2"><div class="d-flex justify-content-between small mb-1"><span>JavaScript</span><span>70%</span></div><div class="progress" style="height:18px"><div class="progress-bar bg-warning" style="width:70%"></div></div></div>
+        <div class="mb-4"><div class="d-flex justify-content-between small mb-1"><span>Python</span><span>50%</span></div><div class="progress" style="height:18px"><div class="progress-bar bg-info" style="width:50%"></div></div></div>
+
+        <h6 class="fw-bold text-muted mb-3">Spinners</h6>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Yükleniyor...</span></div>
+          <div class="spinner-border text-success"></div>
+          <div class="spinner-border text-danger spinner-border-sm"></div>
+          <div class="spinner-grow text-warning" role="status"></div>
+          <div class="spinner-grow text-info spinner-grow-sm"></div>
+          <button class="btn btn-primary" disabled><span class="spinner-border spinner-border-sm me-2"></span>Yükleniyor...</button>
+        </div>
+      </div>
+
+      <!-- List Group & Nav Tabs -->
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Nav Tabs</h6>
+        <ul class="nav nav-tabs" id="myTab">
+          <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1">HTML</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2">CSS</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3">JavaScript</button></li>
+        </ul>
+        <div class="tab-content border border-top-0 p-3 rounded-bottom">
+          <div class="tab-pane fade show active" id="tab1"><p class="mb-0 text-muted">HTML, web sayfalarının yapısını oluşturan işaretleme dilidir. Bootstrap, HTML elementleri için hazır stiller sunar.</p></div>
+          <div class="tab-pane fade" id="tab2"><p class="mb-0 text-muted">CSS, sayfanın görünümünü kontrol eder. Bootstrap'ın utility sınıfları CSS yazmayı minimuma indirir.</p></div>
+          <div class="tab-pane fade" id="tab3"><p class="mb-0 text-muted">Bootstrap 5, jQuery'ye ihtiyaç duymaz. Modal, dropdown gibi bileşenler saf JavaScript ile çalışır.</p></div>
+        </div>
+      </div>
+
+      <!-- Carousel -->
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Carousel</h6>
+        <div id="demoCarousel" class="carousel slide rounded overflow-hidden shadow" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="2"></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active"><div class="d-flex align-items-center justify-content-center text-white" style="height:220px;background:linear-gradient(135deg,#0D1B2A,#7952B3)"><div class="text-center"><h4>Slayt 1</h4><p>Bootstrap Carousel Bileşeni</p></div></div></div>
+            <div class="carousel-item"><div class="d-flex align-items-center justify-content-center text-white" style="height:220px;background:linear-gradient(135deg,#198754,#0D6EFD)"><div class="text-center"><h4>Slayt 2</h4><p>data-bs-ride ile otomatik döner</p></div></div></div>
+            <div class="carousel-item"><div class="d-flex align-items-center justify-content-center text-white" style="height:220px;background:linear-gradient(135deg,#DC3545,#FFC107)"><div class="text-center"><h4>Slayt 3</h4><p>carousel-fade ile solma efekti</p></div></div></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#demoCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#demoCarousel" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       CONTAINER TÜRLERİ
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="container">
+    <h2 class="section-title"><i class="bi bi-bounding-box"></i> Container — Kapsayıcı Türleri</h2>
+    <p class="text-muted mb-4">Bootstrap'ta her şey bir <code>container</code> içinde başlar. 3 farklı container türü vardır:</p>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-4">
+        <div class="card border-primary h-100 shadow-sm">
+          <div class="card-header bg-primary text-white fw-bold"><code>.container</code></div>
+          <div class="card-body">
+            <p class="text-muted">Her breakpoint'te farklı <strong>sabit maksimum genişlik</strong> uygular.</p>
+            <table class="table table-sm table-bordered mb-0">
+              <thead class="table-light"><tr><th>Breakpoint</th><th>Maks. genişlik</th></tr></thead>
+              <tbody>
+                <tr><td><code>xs (&lt;576px)</code></td><td>%100</td></tr>
+                <tr><td><code>sm (≥576px)</code></td><td>540px</td></tr>
+                <tr><td><code>md (≥768px)</code></td><td>720px</td></tr>
+                <tr><td><code>lg (≥992px)</code></td><td>960px</td></tr>
+                <tr><td><code>xl (≥1200px)</code></td><td>1140px</td></tr>
+                <tr><td><code>xxl (≥1400px)</code></td><td>1320px</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-success h-100 shadow-sm">
+          <div class="card-header bg-success text-white fw-bold"><code>.container-fluid</code></div>
+          <div class="card-body">
+            <p class="text-muted">Her zaman <strong>%100 genişlik</strong> — kenarlara kadar uzanır. Tam ekran layout'lar için idealdir.</p>
+            <div class="bg-success bg-opacity-10 border border-success rounded p-3 text-center mt-3">
+              <span class="text-success fw-semibold">← Her zaman tam genişlik →</span>
+            </div>
+            <div class="mt-3">
+              <p class="mb-1 small text-muted">Kullanım alanları:</p>
+              <ul class="small text-muted mb-0">
+                <li>Dashboard / admin panelleri</li>
+                <li>Tam ekran hero bölümleri</li>
+                <li>Harita veya galeri sayfaları</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-warning h-100 shadow-sm">
+          <div class="card-header bg-warning text-dark fw-bold"><code>.container-{breakpoint}</code></div>
+          <div class="card-body">
+            <p class="text-muted">Belirli bir breakpoint'e kadar <strong>%100</strong>, sonrasında <strong>sabit genişlik</strong> uygular.</p>
+            <div class="d-flex flex-column gap-2 mt-2">
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-warning text-dark font-monospace">container-sm</span>
+                <small class="text-muted">sm'den itibaren sabit</small>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-warning text-dark font-monospace">container-md</span>
+                <small class="text-muted">md'den itibaren sabit</small>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-warning text-dark font-monospace">container-lg</span>
+                <small class="text-muted">lg'den itibaren sabit</small>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-warning text-dark font-monospace">container-xl</span>
+                <small class="text-muted">xl'den itibaren sabit</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Canlı görsel karşılaştırma -->
+    <h6 class="fw-bold text-muted mb-3">Canlı Karşılaştırma — Sayfayı daralт/genişlet!</h6>
+    <div class="mb-2">
+      <div class="container bg-primary bg-opacity-10 border border-primary rounded py-2 text-center">
+        <code class="text-primary">.container</code> — Sabit maksimum genişlik, ortalanmış
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="container-fluid bg-success bg-opacity-10 border border-success rounded py-2 text-center">
+        <code class="text-success">.container-fluid</code> — Her zaman %100 genişlik
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="container-md bg-warning bg-opacity-10 border border-warning rounded py-2 text-center">
+        <code class="text-warning">.container-md</code> — md'ye kadar %100, sonra sabit
+      </div>
+    </div>
+
+    <div class="alert alert-info mt-3 d-flex gap-2">
+      <i class="bi bi-lightbulb-fill fs-5 flex-shrink-0"></i>
+      <div><strong>Bu demo sayfası</strong> zaten <code>.container</code> kullanıyor — tüm içerik merkezde, belirli bir maksimum genişlikte tutuluyor. Navbar ise <code>.container</code> içindeki içeriği sınırlıyor, arka plan rengi ise tam genişlikte devam ediyor.</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       STANDALONE COLLAPSE
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="collapse-standalone">
+    <h2 class="section-title"><i class="bi bi-arrows-collapse"></i> Collapse — Daraltılabilir İçerik</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Tek Butonla Collapse</h6>
+        <button class="btn btn-primary mb-3" data-bs-toggle="collapse" data-bs-target="#colDemo1">
+          <i class="bi bi-chevron-down"></i> İçeriği Göster / Gizle
+        </button>
+        <div class="collapse" id="colDemo1">
+          <div class="card card-body shadow-sm border-primary">
+            <h6 class="text-primary"><i class="bi bi-info-circle"></i> Collapse İçeriği</h6>
+            <p class="mb-0 text-muted">Bu içerik <code>data-bs-toggle="collapse"</code> ve <code>data-bs-target="#id"</code> ile gösterilip gizleniyor. İçine herhangi bir HTML koyabilirsiniz.</p>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h6 class="fw-bold text-muted mb-3">Birden Fazla Tetikleyici</h6>
+        <div class="d-flex gap-2 mb-3">
+          <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#colDemo2">Buton 1</button>
+          <a href="#colDemo2" class="btn btn-outline-success" data-bs-toggle="collapse">Link 2</a>
+        </div>
+        <div class="collapse" id="colDemo2">
+          <div class="card card-body border-success">
+            <p class="mb-0 text-muted">İki farklı element de aynı collapse'ı kontrol edebilir! Hem buton hem link çalışıyor.</p>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h6 class="fw-bold text-muted mb-3">Yatay Collapse</h6>
+        <button class="btn btn-warning text-dark mb-3" data-bs-toggle="collapse" data-bs-target="#colDemo3">Yatay Genişlet</button>
+        <div class="collapse collapse-horizontal" id="colDemo3">
+          <div class="card border-warning" style="width: 300px">
+            <div class="card-body">
+              <i class="bi bi-arrow-left-right text-warning"></i> <strong>collapse-horizontal</strong> sınıfı yatay yönde açar!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Accordion (data-bs-parent ile)</h6>
+        <div class="accordion accordion-flush border rounded" id="standaloneAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#sa1" data-bs-parent="#standaloneAccordion">
+                <i class="bi bi-1-circle-fill text-primary me-2"></i> data-bs-parent nasıl çalışır?
+              </button>
+            </h2>
+            <div id="sa1" class="accordion-collapse collapse show" data-bs-parent="#standaloneAccordion">
+              <div class="accordion-body text-muted">
+                <code>data-bs-parent="#accordionId"</code> sayesinde bir öğe açıldığında diğerleri otomatik kapanır. Bu özelliği kaldırırsanız hepsi bağımsız açılır-kapanır.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#sa2" data-bs-parent="#standaloneAccordion">
+                <i class="bi bi-2-circle-fill text-success me-2"></i> accordion-flush ne işe yarar?
+              </button>
+            </h2>
+            <div id="sa2" class="accordion-collapse collapse" data-bs-parent="#standaloneAccordion">
+              <div class="accordion-body text-muted">
+                <code>accordion-flush</code> sınıfı dış kenarlıkları ve yuvarlaklığı kaldırır, accordion'u container'ın içinde daha düz görünür hale getirir.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#sa3" data-bs-parent="#standaloneAccordion">
+                <i class="bi bi-3-circle-fill text-warning me-2"></i> JS ile collapse açma/kapama?
+              </button>
+            </h2>
+            <div id="sa3" class="accordion-collapse collapse" data-bs-parent="#standaloneAccordion">
+              <div class="accordion-body">
+                <code class="d-block mb-2 text-primary">const col = new bootstrap.Collapse('#myId')</code>
+                <code class="d-block mb-2 text-success">col.show() / col.hide() / col.toggle()</code>
+                <span class="text-muted">Bootstrap JS API ile programatik kontrol.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-secondary mt-4">
+          <strong><i class="bi bi-code-slash"></i> Temel Kullanım:</strong>
+          <pre class="mb-0 mt-2 small"><code>&lt;button data-bs-toggle="collapse"
+        data-bs-target="#hedef"&gt;Aç&lt;/button&gt;
+
+&lt;div class="collapse" id="hedef"&gt;
+  Gizlenen içerik
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       TOOLTIPS & POPOVERS
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="tooltips-popovers">
+    <h2 class="section-title"><i class="bi bi-chat-square-dots"></i> Tooltips & Popovers</h2>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Tooltips — Üzerine Gel!</h6>
+        <div class="d-flex flex-wrap gap-3 mb-4">
+          <button class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Üstten gelen tooltip">Üst ↑</button>
+          <button class="btn btn-outline-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alttan gelen tooltip">Alt ↓</button>
+          <button class="btn btn-outline-warning" data-bs-toggle="tooltip" data-bs-placement="left" title="Soldan gelen tooltip">Sol ←</button>
+          <button class="btn btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="right" title="Sağdan gelen tooltip">Sağ →</button>
+        </div>
+        <div class="d-flex flex-wrap gap-3 mb-4">
+          <button class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="HTML <strong>destekler</strong>" data-bs-html="true"><i class="bi bi-code-slash"></i> HTML Tooltip</button>
+          <span class="d-inline-block" data-bs-toggle="tooltip" title="Disabled elementlere de eklenebilir!">
+            <button class="btn btn-secondary" disabled style="pointer-events:none">Disabled Buton</button>
+          </span>
+        </div>
+
+        <div class="alert alert-light border">
+          <strong><i class="bi bi-exclamation-circle text-warning"></i> Önemli:</strong> Tooltip'ler JS ile manuel başlatılmalı!
+          <pre class="mb-0 mt-2 small"><code>// Tüm tooltip'leri başlat
+const tips = [...document.querySelectorAll(
+  '[data-bs-toggle="tooltip"]'
+)].map(el => new bootstrap.Tooltip(el));</code></pre>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Popovers — Tıkla!</h6>
+        <div class="d-flex flex-wrap gap-3 mb-4">
+          <button class="btn btn-primary" data-bs-toggle="popover" data-bs-placement="top"
+            data-bs-title="<i class='bi bi-star-fill text-warning'></i> Bootstrap Popover"
+            data-bs-content="Popover hem başlık hem uzun içerik taşır. Tooltip'ten daha güçlüdür."
+            data-bs-html="true">Popover (Üst)</button>
+          <button class="btn btn-success" data-bs-toggle="popover" data-bs-placement="right"
+            data-bs-title="Sağ Popover"
+            data-bs-content="data-bs-placement ile yönü belirleyebilirsiniz.">Popover (Sağ)</button>
+          <button class="btn btn-warning text-dark" data-bs-toggle="popover" data-bs-trigger="hover"
+            data-bs-title="Hover Tetiklemeli"
+            data-bs-content="data-bs-trigger='hover' ile tıklama yerine mouse ile açılır.">Hover Popover</button>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h6 class="fw-bold mb-3">Tooltip vs Popover Karşılaştırması</h6>
+            <table class="table table-sm table-bordered mb-0">
+              <thead class="table-dark"><tr><th>Özellik</th><th>Tooltip</th><th>Popover</th></tr></thead>
+              <tbody>
+                <tr><td>Tetikleme</td><td>Hover</td><td>Click</td></tr>
+                <tr><td>Başlık</td><td><i class="bi bi-x text-danger"></i> Yok</td><td><i class="bi bi-check text-success"></i> Var</td></tr>
+                <tr><td>İçerik uzunluğu</td><td>Kısa</td><td>Uzun</td></tr>
+                <tr><td>HTML desteği</td><td>Opsiyonel</td><td>Opsiyonel</td></tr>
+                <tr><td>JS başlatma</td><td colspan="2" class="text-center text-danger fw-semibold">Her ikisi de zorunlu!</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       OFFCANVAS
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="offcanvas-section">
+    <h2 class="section-title"><i class="bi bi-layout-sidebar"></i> Offcanvas <span class="badge bg-success ms-2 fs-6">Bootstrap 5 YENİ</span></h2>
+    <p class="text-muted mb-4">Ekranın kenarından kayan panel bileşeni. Mobil navigasyon, sepet, filtre paneli için idealdir.</p>
+
+    <div class="d-flex flex-wrap gap-3 mb-5">
+      <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#ocLeft">
+        <i class="bi bi-layout-sidebar"></i> Sol Panel
+      </button>
+      <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#ocRight">
+        <i class="bi bi-layout-sidebar-reverse"></i> Sağ Panel
+      </button>
+      <button class="btn btn-warning text-dark" data-bs-toggle="offcanvas" data-bs-target="#ocTop">
+        <i class="bi bi-layout-split"></i> Üst Panel
+      </button>
+      <button class="btn btn-danger" data-bs-toggle="offcanvas" data-bs-target="#ocBottom">
+        <i class="bi bi-layout-split"></i> Alt Panel
+      </button>
+      <button class="btn btn-dark" data-bs-toggle="offcanvas" data-bs-target="#ocBackdrop" data-bs-scroll="true" data-bs-backdrop="false">
+        <i class="bi bi-layout-text-sidebar"></i> Scroll + No Backdrop
+      </button>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header fw-bold" style="background:#7952B3;color:white">Temel Yapı</div>
+          <div class="card-body">
+            <pre class="mb-0 small"><code>&lt;!-- Tetikleyici --&gt;
+&lt;button data-bs-toggle="offcanvas"
+        data-bs-target="#panel"&gt;Aç&lt;/button&gt;
+
+&lt;!-- Panel --&gt;
+&lt;div class="offcanvas offcanvas-start"
+     id="panel"&gt;
+  &lt;div class="offcanvas-header"&gt;
+    &lt;h5 class="offcanvas-title"&gt;Başlık&lt;/h5&gt;
+    &lt;button data-bs-dismiss="offcanvas"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="offcanvas-body"&gt;
+    İçerik buraya...
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Konum Sınıfları</h6>
+        <div class="list-group shadow-sm mb-4">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <code>offcanvas-start</code><span class="badge bg-primary">← Soldan</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <code>offcanvas-end</code><span class="badge bg-success">Sağdan →</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <code>offcanvas-top</code><span class="badge bg-warning text-dark">↓ Yukarıdan</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <code>offcanvas-bottom</code><span class="badge bg-danger">↑ Aşağıdan</span>
+          </div>
+        </div>
+        <div class="alert alert-info mb-0">
+          <strong>data-bs-scroll="true"</strong> → Panel açıkken sayfa scroll edilebilir<br>
+          <strong>data-bs-backdrop="false"</strong> → Karartma efekti kaldırılır
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       BREADCRUMB & PAGINATION
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="breadcrumb-pagination">
+    <h2 class="section-title"><i class="bi bi-signpost-split"></i> Breadcrumb & Pagination</h2>
+    <div class="row g-5">
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Breadcrumb — Konum Göstergesi</h6>
+        <nav aria-label="breadcrumb" class="mb-3">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Ana Sayfa</a></li>
+            <li class="breadcrumb-item active">Kategoriler</li>
+          </ol>
+        </nav>
+        <nav aria-label="breadcrumb" class="mb-3">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="bi bi-house"></i></a></li>
+            <li class="breadcrumb-item"><a href="#">Ürünler</a></li>
+            <li class="breadcrumb-item"><a href="#">Elektronik</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Laptoplar</li>
+          </ol>
+        </nav>
+
+        <!-- Özel ayraçlı breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb" style="--bs-breadcrumb-divider: '›'">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Library</a></li>
+            <li class="breadcrumb-item active">Data</li>
+          </ol>
+        </nav>
+
+        <div class="alert alert-secondary mt-3 small">
+          <code>--bs-breadcrumb-divider: '›'</code> — CSS değişkeni ile ayraç değiştirme<br>
+          <code>aria-current="page"</code> — Erişilebilirlik için aktif sayfayı belirtir
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h6 class="fw-bold text-muted mb-3">Pagination — Sayfalama</h6>
+
+        <!-- Standart -->
+        <nav class="mb-3" aria-label="sayfa 1">
+          <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">»</a></li>
+          </ul>
+        </nav>
+
+        <!-- Büyük boyut + ortalanmış -->
+        <nav class="mb-3" aria-label="sayfa 2">
+          <ul class="pagination pagination-lg justify-content-center">
+            <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
+          </ul>
+        </nav>
+
+        <!-- Küçük + sağa yaslı -->
+        <nav aria-label="sayfa 3">
+          <ul class="pagination pagination-sm justify-content-end mb-0">
+            <li class="page-item"><a class="page-link" href="#">Önceki</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item active"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Sonraki</a></li>
+          </ul>
+        </nav>
+
+        <div class="alert alert-secondary mt-3 small">
+          <code>pagination-lg / pagination-sm</code> — Boyut<br>
+          <code>justify-content-center/end</code> — Hizalama<br>
+          <code>page-item disabled</code> — Pasif sayfa<br>
+          <code>page-item active</code> — Aktif sayfa
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       BOOTSTRAP ICONS GALERİSİ
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="icons-gallery">
+    <h2 class="section-title"><i class="bi bi-grid-1x2"></i> Bootstrap Icons — 2000+ Ücretsiz İkon</h2>
+
+    <div class="alert alert-primary d-flex align-items-center gap-3 mb-4">
+      <i class="bi bi-info-circle-fill fs-4 flex-shrink-0"></i>
+      <div>Bootstrap Icons ayrı bir pakettir. CDN: <code>bootstrap-icons.css</code> veya <code>npm install bootstrap-icons</code></div>
+    </div>
+
+    <!-- Kullanım yöntemleri -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header fw-bold bg-dark text-white">1. Sınıf ile (Önerilen)</div>
+          <div class="card-body">
+            <pre class="mb-2 small"><code>&lt;i class="bi bi-house"&gt;&lt;/i&gt;</code></pre>
+            <div class="d-flex align-items-center gap-2 p-2 bg-light rounded">
+              <i class="bi bi-house fs-4 text-primary"></i>
+              <i class="bi bi-house fs-3 text-success"></i>
+              <i class="bi bi-house fs-2 text-danger"></i>
+              <i class="bi bi-house fs-1 text-warning"></i>
+            </div>
+            <small class="text-muted">fs-1…fs-6 ile boyut kontrolü</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header fw-bold bg-dark text-white">2. Buton içinde</div>
+          <div class="card-body">
+            <pre class="mb-2 small"><code>&lt;button class="btn btn-primary"&gt;
+  &lt;i class="bi bi-plus-lg"&gt;&lt;/i&gt; Ekle
+&lt;/button&gt;</code></pre>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Ekle</button>
+              <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Sil</button>
+              <button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i> Onayla</button>
+              <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil"></i> Düzenle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header fw-bold bg-dark text-white">3. Renkli & Büyük</div>
+          <div class="card-body">
+            <pre class="mb-2 small"><code>&lt;i class="bi bi-heart-fill
+   fs-2 text-danger"&gt;&lt;/i&gt;</code></pre>
+            <div class="d-flex gap-3 align-items-center p-2 bg-light rounded">
+              <i class="bi bi-heart-fill fs-2 text-danger"></i>
+              <i class="bi bi-star-fill fs-2 text-warning"></i>
+              <i class="bi bi-shield-fill-check fs-2 text-success"></i>
+              <i class="bi bi-lightning-fill fs-2 text-primary"></i>
+              <i class="bi bi-gem fs-2" style="color:#7952B3"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- İkon kategorileri galerisi -->
+    <h6 class="fw-bold text-muted mb-3">İkon Kategorileri</h6>
+    <div class="row g-3">
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header small fw-bold text-primary"><i class="bi bi-person"></i> Kişi & Kullanıcı</div>
+          <div class="card-body py-3">
+            <div class="d-flex flex-wrap gap-3 fs-4">
+              <i class="bi bi-person" title="person" data-bs-toggle="tooltip"></i>
+              <i class="bi bi-person-fill" data-bs-toggle="tooltip" title="person-fill"></i>
+              <i class="bi bi-people" data-bs-toggle="tooltip" title="people"></i>
+              <i class="bi bi-person-badge" data-bs-toggle="tooltip" title="person-badge"></i>
+              <i class="bi bi-person-circle" data-bs-toggle="tooltip" title="person-circle"></i>
+              <i class="bi bi-person-plus" data-bs-toggle="tooltip" title="person-plus"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header small fw-bold text-success"><i class="bi bi-arrows-move"></i> Navigasyon</div>
+          <div class="card-body py-3">
+            <div class="d-flex flex-wrap gap-3 fs-4">
+              <i class="bi bi-house" data-bs-toggle="tooltip" title="house"></i>
+              <i class="bi bi-house-door" data-bs-toggle="tooltip" title="house-door"></i>
+              <i class="bi bi-grid" data-bs-toggle="tooltip" title="grid"></i>
+              <i class="bi bi-list" data-bs-toggle="tooltip" title="list"></i>
+              <i class="bi bi-menu-button" data-bs-toggle="tooltip" title="menu-button"></i>
+              <i class="bi bi-box-arrow-right" data-bs-toggle="tooltip" title="box-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header small fw-bold text-danger"><i class="bi bi-bell"></i> Bildirim & Durum</div>
+          <div class="card-body py-3">
+            <div class="d-flex flex-wrap gap-3 fs-4">
+              <i class="bi bi-bell" data-bs-toggle="tooltip" title="bell"></i>
+              <i class="bi bi-bell-fill" data-bs-toggle="tooltip" title="bell-fill"></i>
+              <i class="bi bi-check-circle" data-bs-toggle="tooltip" title="check-circle"></i>
+              <i class="bi bi-x-circle" data-bs-toggle="tooltip" title="x-circle"></i>
+              <i class="bi bi-exclamation-triangle" data-bs-toggle="tooltip" title="exclamation-triangle"></i>
+              <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="info-circle"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header small fw-bold text-warning"><i class="bi bi-tools"></i> Araçlar & Dosya</div>
+          <div class="card-body py-3">
+            <div class="d-flex flex-wrap gap-3 fs-4">
+              <i class="bi bi-gear" data-bs-toggle="tooltip" title="gear"></i>
+              <i class="bi bi-download" data-bs-toggle="tooltip" title="download"></i>
+              <i class="bi bi-upload" data-bs-toggle="tooltip" title="upload"></i>
+              <i class="bi bi-file-earmark" data-bs-toggle="tooltip" title="file-earmark"></i>
+              <i class="bi bi-folder" data-bs-toggle="tooltip" title="folder"></i>
+              <i class="bi bi-search" data-bs-toggle="tooltip" title="search"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <a href="https://icons.getbootstrap.com" target="_blank" class="btn btn-outline-dark">
+        <i class="bi bi-box-arrow-up-right"></i> Tüm ikonları gör → icons.getbootstrap.com
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       DARK MODE
+  ════════════════════════════════════════════════ -->
+  <section class="demo-section" id="darkmode-section">
+    <h2 class="section-title"><i class="bi bi-moon-stars"></i> Dark Mode <span class="badge bg-info text-dark ms-2 fs-6">Bootstrap 5.3 YENİ</span></h2>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-8">
+        <p class="text-muted">Bootstrap 5.3 ile birlikte <code>data-bs-theme</code> attribute'ü eklendi. Tek satır HTML ile tüm sayfa veya belirli bir bileşen dark mode'a geçirilir.</p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6">
+            <div class="card" data-bs-theme="light">
+              <div class="card-header"><i class="bi bi-sun"></i> <strong>Light Mode</strong> <code class="small">data-bs-theme="light"</code></div>
+              <div class="card-body">
+                <button class="btn btn-primary btn-sm me-2">Buton</button>
+                <button class="btn btn-secondary btn-sm">Buton</button>
+                <hr>
+                <input type="text" class="form-control form-control-sm" placeholder="Input alanı">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card" data-bs-theme="dark">
+              <div class="card-header"><i class="bi bi-moon"></i> <strong>Dark Mode</strong> <code class="small">data-bs-theme="dark"</code></div>
+              <div class="card-body">
+                <button class="btn btn-primary btn-sm me-2">Buton</button>
+                <button class="btn btn-secondary btn-sm">Buton</button>
+                <hr>
+                <input type="text" class="form-control form-control-sm" placeholder="Input alanı">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-secondary">
+          <strong>Kullanım yerleri:</strong>
+          <pre class="mb-0 mt-2 small"><code>&lt;!-- 1. Tüm sayfa --&gt;
+&lt;html data-bs-theme="dark"&gt;
+
+&lt;!-- 2. Belirli bir bileşen --&gt;
+&lt;nav class="navbar" data-bs-theme="dark"&gt;
+
+&lt;!-- 3. JS ile toggle --&gt;
+document.documentElement.setAttribute(
+  'data-bs-theme',
+  document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark'
+);</code></pre>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header fw-bold" style="background:#7952B3;color:white">
+            <i class="bi bi-toggle2-on"></i> Canlı Demo
+          </div>
+          <div class="card-body text-center py-4">
+            <p class="text-muted mb-4">Navbar'daki butonu veya aşağıdaki butonu kullan:</p>
+            <button class="btn btn-lg fw-bold mb-3" id="darkModeBtn"
+              style="background:#7952B3;color:white;border:none"
+              onclick="toggleTheme()">
+              <i class="bi bi-moon-stars-fill" id="dmIcon"></i>
+              <span id="dmText">Dark Mode Aç</span>
+            </button>
+            <p class="small text-muted mb-0">Tüm sayfa renk teması değişir.<br>Bootstrap bileşenler otomatik uyum sağlar.</p>
+          </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mt-3">
+          <div class="card-body">
+            <h6 class="fw-bold mb-3">Yeni CSS Değişkenleri (v5.3)</h6>
+            <ul class="list-unstyled small mb-0">
+              <li class="mb-1"><code>--bs-body-bg</code> — Sayfa arka planı</li>
+              <li class="mb-1"><code>--bs-body-color</code> — Metin rengi</li>
+              <li class="mb-1"><code>--bs-border-color</code> — Kenarlık rengi</li>
+              <li class="mb-1"><code>bg-body-tertiary</code> — Adaptif arka plan</li>
+              <li><code>text-body-secondary</code> — Adaptif metin</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<footer class="py-4 mt-2 text-white text-center" style="background:#0D1B2A">
+  <div class="container">
+    <p class="mb-1 fw-semibold">Bootstrap 5 — Web Programlama Demo Projesi</p>
+    <p class="small text-white-50 mb-0">getbootstrap.com  |  Bootstrap Icons  |  CDN via jsDelivr</p>
+  </div>
+</footer>
+
+<!-- ═══ MODALS ═══ -->
+<div class="modal fade" id="modal1" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background:#7952B3;color:white">
+        <h5 class="modal-title"><i class="bi bi-info-circle"></i> Standart Modal</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bu <strong>standart bir Bootstrap modal</strong> örneğidir. <span class="code-tag">data-bs-toggle="modal"</span> ve <span class="code-tag">data-bs-target="#id"</span> ile açılır.</p>
+        <p class="text-muted mb-0">Modal boyutları: <code>modal-sm</code>, <code>modal-lg</code>, <code>modal-xl</code>, <code>modal-fullscreen</code></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary">Tamam</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal2" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title"><i class="bi bi-person-plus"></i> Hızlı Giriş</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3"><label class="form-label">E-posta</label><input type="email" class="form-control" placeholder="ornek@mail.com"></div>
+        <div class="mb-3"><label class="form-label">Şifre</label><input type="password" class="form-control" placeholder="••••••••"></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox"><label class="form-check-label">Beni hatırla</label></div>
+      </div>
+      <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">İptal</button><button class="btn btn-success">Giriş Yap</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal3" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white border-0">
+        <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i> Emin misiniz?</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i class="bi bi-trash3 text-danger" style="font-size:3rem"></i>
+        <p class="mt-3">Bu kaydı silmek istediğinizden emin misiniz? Bu işlem <strong>geri alınamaz</strong>.</p>
+      </div>
+      <div class="modal-footer justify-content-center border-0">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Vazgeç</button>
+        <button class="btn btn-danger btn-sm" data-bs-dismiss="modal">Evet, Sil</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal4" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Büyük Modal (modal-lg)</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-6"><div class="card border-primary h-100"><div class="card-body"><h6 class="text-primary">modal-sm</h6><p class="text-muted mb-0">300px genişlik — Onay diyalogları için</p></div></div></div>
+          <div class="col-md-6"><div class="card border-success h-100"><div class="card-body"><h6 class="text-success">modal (varsayılan)</h6><p class="text-muted mb-0">500px genişlik — Genel amaçlı</p></div></div></div>
+          <div class="col-md-6"><div class="card border-warning h-100"><div class="card-body"><h6 class="text-warning">modal-lg</h6><p class="text-muted mb-0">800px genişlik — Form ve içerik</p></div></div></div>
+          <div class="col-md-6"><div class="card border-danger h-100"><div class="card-body"><h6 class="text-danger">modal-xl</h6><p class="text-muted mb-0">1140px genişlik — Geniş içerik</p></div></div></div>
+        </div>
+      </div>
+      <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="welcomeModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background:#0D1B2A;color:white">
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-white"><span style="color:#7952B3">⬟</span> Bootstrap 5 Demo</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <div class="mb-3" style="font-size:4rem">🚀</div>
+        <h4>Web Programlama Demo Projesi</h4>
+        <p class="text-white-50">Bu demo, Bootstrap 5'in tüm temel bileşenlerini ve utility sınıflarını kapsamaktadır.</p>
+        <div class="d-flex justify-content-center gap-2 flex-wrap mt-3">
+          <span class="badge bg-primary">Grid</span><span class="badge bg-success">Forms</span><span class="badge bg-danger">Modals</span><span class="badge bg-warning text-dark">Tables</span><span class="badge bg-info text-dark">Cards</span><span class="badge" style="background:#7952B3">Utilities</span><span class="badge bg-dark">Offcanvas</span><span class="badge bg-secondary">Dark Mode</span>
+        </div>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Demo'yu Keşfet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ─── Dark Mode ───
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-bs-theme') === 'dark';
+    html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+    // navbar ikonu
+    document.querySelector('[onclick="toggleTheme()"] i').className =
+      isDark ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
+    // bölüm ikonu
+    const dmIcon = document.getElementById('dmIcon');
+    const dmText = document.getElementById('dmText');
+    if (dmIcon) dmIcon.className = isDark ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
+    if (dmText) dmText.textContent = isDark ? 'Dark Mode Aç' : 'Light Mode Aç';
+  }
+
+  // ─── Password toggle ───
+  function togglePass() {
+    const inp = document.getElementById('passInput');
+    const icon = document.getElementById('eyeIcon');
+    if (inp.type === 'password') { inp.type = 'text'; icon.className = 'bi bi-eye-slash'; }
+    else { inp.type = 'password'; icon.className = 'bi bi-eye'; }
+  }
+
+  // ─── Toast ───
+  function showToast() {
+    new bootstrap.Toast(document.getElementById('liveToast')).show();
+  }
+
+  // ─── Form validation ───
+  document.getElementById('demoForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.classList.add('was-validated');
+  });
+
+  // ─── Tooltips (tüm sayfada) ───
+  document.addEventListener('DOMContentLoaded', () => {
+    [...document.querySelectorAll('[data-bs-toggle="tooltip"]')]
+      .forEach(el => new bootstrap.Tooltip(el));
+
+    [...document.querySelectorAll('[data-bs-toggle="popover"]')]
+      .forEach(el => new bootstrap.Popover(el));
+  });
+</script>
+<!-- ═══ OFFCANVAS PANELLERİ ═══ -->
+<!-- Sol -->
+<div class="offcanvas offcanvas-start" id="ocLeft" tabindex="-1">
+  <div class="offcanvas-header" style="background:#7952B3;color:white">
+    <h5 class="offcanvas-title"><i class="bi bi-layout-sidebar"></i> Sol Panel</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p class="text-muted">Bu panel <code>offcanvas-start</code> sınıfıyla sol taraftan geliyor.</p>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><i class="bi bi-house me-2 text-primary"></i>Ana Sayfa</li>
+      <li class="list-group-item"><i class="bi bi-grid me-2 text-success"></i>Kategoriler</li>
+      <li class="list-group-item"><i class="bi bi-heart me-2 text-danger"></i>Favoriler</li>
+      <li class="list-group-item"><i class="bi bi-gear me-2 text-secondary"></i>Ayarlar</li>
+    </ul>
+    <hr>
+    <button class="btn btn-primary w-100" data-bs-dismiss="offcanvas">Kapat</button>
+  </div>
+</div>
+
+<!-- Sağ -->
+<div class="offcanvas offcanvas-end" id="ocRight" tabindex="-1">
+  <div class="offcanvas-header bg-success text-white">
+    <h5 class="offcanvas-title"><i class="bi bi-cart3"></i> Alışveriş Sepeti</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p class="text-muted"><code>offcanvas-end</code> — sağdan geliyor. Sepet, bildirim gibi paneller için idealdir.</p>
+    <div class="card mb-2"><div class="card-body d-flex justify-content-between align-items-center py-2"><span>Bootstrap Kitabı</span><strong>₺150</strong></div></div>
+    <div class="card mb-2"><div class="card-body d-flex justify-content-between align-items-center py-2"><span>Web Kursu</span><strong>₺499</strong></div></div>
+    <div class="card mb-3 border-success"><div class="card-body d-flex justify-content-between align-items-center py-2 fw-bold"><span>Toplam</span><span class="text-success">₺649</span></div></div>
+    <button class="btn btn-success w-100">Ödemeye Geç</button>
+  </div>
+</div>
+
+<!-- Üst -->
+<div class="offcanvas offcanvas-top" id="ocTop" tabindex="-1" style="height:220px">
+  <div class="offcanvas-header bg-warning text-dark">
+    <h5 class="offcanvas-title"><i class="bi bi-search"></i> Gelişmiş Arama</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex gap-2 align-items-center flex-wrap">
+    <input type="text" class="form-control" placeholder="Ürün ara..." style="max-width:300px">
+    <select class="form-select" style="max-width:180px"><option>Tüm Kategoriler</option><option>Elektronik</option><option>Giyim</option></select>
+    <button class="btn btn-warning text-dark"><i class="bi bi-search"></i> Ara</button>
+    <span class="text-muted small">(<code>offcanvas-top</code> — yukarıdan geliyor)</span>
+  </div>
+</div>
+
+<!-- Alt -->
+<div class="offcanvas offcanvas-bottom" id="ocBottom" tabindex="-1" style="height:200px">
+  <div class="offcanvas-header bg-danger text-white">
+    <h5 class="offcanvas-title"><i class="bi bi-cookie"></i> Çerez Bildirimi</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex align-items-center justify-content-between gap-3 flex-wrap">
+    <p class="mb-0 text-muted"><code>offcanvas-bottom</code> — aşağıdan geliyor. GDPR bildirimi gibi durumlar için kullanışlıdır. Bu site çerezler kullanmaktadır.</p>
+    <div class="d-flex gap-2 flex-shrink-0">
+      <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="offcanvas">Reddet</button>
+      <button class="btn btn-danger btn-sm" data-bs-dismiss="offcanvas">Kabul Et</button>
+    </div>
+  </div>
+</div>
+
+<!-- Scroll + no backdrop -->
+<div class="offcanvas offcanvas-start" id="ocBackdrop" tabindex="-1">
+  <div class="offcanvas-header" style="background:#0D1B2A;color:white">
+    <h5 class="offcanvas-title"><i class="bi bi-list-check"></i> Filtre Paneli</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p class="small text-muted mb-3"><strong>data-bs-scroll="true"</strong> + <strong>data-bs-backdrop="false"</strong> — Panel açıkken sayfayı scroll edebilirsiniz!</p>
+    <h6>Fiyat Aralığı</h6>
+    <input type="range" class="form-range mb-3" min="0" max="5000">
+    <h6>Kategori</h6>
+    <div class="form-check"><input class="form-check-input" type="checkbox" checked><label class="form-check-label">Elektronik</label></div>
+    <div class="form-check"><input class="form-check-input" type="checkbox"><label class="form-check-label">Giyim</label></div>
+    <div class="form-check"><input class="form-check-input" type="checkbox"><label class="form-check-label">Kitap</label></div>
+    <hr>
+    <button class="btn btn-dark w-100" data-bs-dismiss="offcanvas">Filtreleri Uygula</button>
+  </div>
+</div>
+
+</body>
+</html>
